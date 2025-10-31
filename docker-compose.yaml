@@ -1,0 +1,33 @@
+version: "3.9"
+services: # Chaque service correspond à un conteneur
+  backend:
+    build: ./backend # Construit l’image du backend à partir du Dockerfile dans le dossier backend
+    ports:
+      - "8080:8080" # API backend via http://localhost:8080.
+    networks:
+      - portfolio-net #Place le conteneur sur le réseau Docker appelé portfolio-net
+    volumes:
+    - ./backend/data:/data # Persiste les données de la base H2 dans un dossier local ./backend/data
+    - ./backend:/app
+    - /app/target
+    command: mvn spring-boot:run
+    
+  frontend:
+    build: ./frontend # Construit l’image du frontend à partir du Dockerfile dans le dossier frontend
+    ports:
+      - "5173:5173" # Frontend via http://localhost:5173.
+    depends_on:
+      - backend # le frontend dépend du backend → Docker Compose démarrera d’abord le backend.
+    networks:
+      - portfolio-net #Place le conteneur sur le réseau Docker appelé portfolio-net
+    volumes:
+    - ./frontend:/app  # monte le code local dans le conteneur
+    - /app/node_modules # ignore les node_modules du conteneur pour ne pas écraser
+    command: npm run dev -- --host 0.0.0.0
+
+
+networks:
+  #Chaque conteneur sur ce réseau peut communiquer avec les autres par leur nom de service.
+  #Docker crée automatiquement un sous-réseau privé interne pour ce réseau bridge, et chaque conteneur obtient une IP interne
+  portfolio-net: #Le frontend est sur le même réseau que le backend → communication possible via http://backend:8080 depuis le conteneur.
+    driver: bridge #réseau privé entre conteneurs interne à Docker
