@@ -1,20 +1,67 @@
-name: Test SSH Connection
+name: Deploy Portfolio
 
 on:
-  workflow_dispatch: # Permet de lancer le workflow manuellement
+  push:
+    branches:
+      - main
 
 jobs:
-  test-ssh:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Test SSH
+      # 1️⃣ Checkout du code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2️⃣ Set up Java pour backend
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      # 3️⃣ Build backend
+      - name: Build backend
+        working-directory: ./backend
+        run: mvn clean package -DskipTests
+
+      # 4️⃣ Set up Node.js pour frontend
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      # 5️⃣ Installer les dépendances frontend
+      - name: Install frontend deps
+        working-directory: ./frontend
+        run: npm install
+
+      # 6️⃣ Build frontend
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build
+
+      # 7️⃣ Copier backend et frontend sur le VPS
+      - name: Deploy to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          source: |
+            backend/target/backend-0.0.1-SNAPSHOT.jar
+            frontend/build/
+          target: /var/www/portfolio/
+
+      # 8️⃣ Redémarrer le backend via systemd
+      - name: Restart backend
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            echo "Connexion réussie !"
-            whoami
-            pwd
+            sudo systemctl restart portfolio-backend
+            sudo systemctl status portfolio-backend
