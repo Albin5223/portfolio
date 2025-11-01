@@ -46,7 +46,7 @@ jobs:
       - name: Check backend target
         working-directory: ./backend
         run: ls -la target
-        
+
         # Vérification optionnelle du dossier dist du frontend
       - name: Check frontend build
         working-directory: ./frontend
@@ -54,7 +54,7 @@ jobs:
             
         # Vérification optionnelle des fichiers à déployer
       - name: Check files to deploy
-        run: ls -la backend/target frontend/build
+        run: ls -la backend/target frontend/dist
 
       # 7️⃣ Copier backend et frontend sur le VPS
       - name: Deploy to VPS
@@ -66,7 +66,7 @@ jobs:
           port: 22
           source: |
             backend/target/backend-0.0.1-SNAPSHOT.jar
-            frontend/build/
+            frontend/dist/
           target: /var/www/portfolio/
 
       # 8️⃣ Redémarrer le backend via systemd
