@@ -1,0 +1,4 @@
+# Ignore tous les .env par défaut
+.env
+# Mais tu peux laisser les fichiers spécifiques si nécessaire
+!.env.production

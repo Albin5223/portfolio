@@ -9,5 +9,8 @@ export default defineConfig({
     watch: {
       usePolling: true, // Vite scanne régulièrement les fichiers pour détecter les changements
     },
+    proxy: {
+      '/api': 'http://127.0.0.1:8080'
+    },
   },
 })
