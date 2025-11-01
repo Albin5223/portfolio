@@ -49,7 +49,7 @@ jobs:
     
       - name: Check frontend build
         working-directory: ./frontend
-        run: ls -la build
+        run: ls -la
 
       # 7️⃣ Copier backend et frontend sur le VPS
       - name: Deploy to VPS
