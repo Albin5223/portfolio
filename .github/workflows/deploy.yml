@@ -46,10 +46,15 @@ jobs:
       - name: Check backend target
         working-directory: ./backend
         run: ls -la target
-    
+        
+        # Vérification optionnelle du dossier dist du frontend
       - name: Check frontend build
         working-directory: ./frontend
-        run: ls -la
+        run: ls -la dist
+            
+        # Vérification optionnelle des fichiers à déployer
+      - name: Check files to deploy
+        run: ls -la backend/target frontend/build
 
       # 7️⃣ Copier backend et frontend sur le VPS
       - name: Deploy to VPS
