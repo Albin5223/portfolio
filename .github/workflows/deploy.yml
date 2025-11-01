@@ -26,6 +26,11 @@ jobs:
         working-directory: ./backend
         run: mvn clean package -DskipTests
 
+    # 3️⃣bis Renommer le JAR pour systemd
+      - name: Rename backend jar to app.jar
+        working-directory: ./backend/target
+        run: mv backend-0.0.1-SNAPSHOT.jar app.jar
+
       # 4️⃣ Set up Node.js pour frontend
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -64,7 +69,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
-          source: "backend/target/backend-0.0.1-SNAPSHOT.jar, frontend/dist/"
+          source: "backend/target/app.jar, frontend/dist/"
           target: /var/www/portfolio/
 
       # 8️⃣ Redémarrer le backend via systemd
