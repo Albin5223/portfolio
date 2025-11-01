@@ -41,6 +41,15 @@ jobs:
       - name: Build frontend
         working-directory: ./frontend
         run: npm run build
+        
+        # Vérification optionnelle du dossier target du backend
+      - name: Check backend target
+        working-directory: ./backend
+        run: ls -la target
+    
+      - name: Check frontend build
+        working-directory: ./frontend
+        run: ls -la build
 
       # 7️⃣ Copier backend et frontend sur le VPS
       - name: Deploy to VPS
