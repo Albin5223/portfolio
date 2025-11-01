@@ -58,13 +58,13 @@ jobs:
 
       # 7️⃣ Copier backend et frontend sur le VPS
       - name: Deploy to VPS
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
-          source: backend/target/backend-0.0.1-SNAPSHOT.jar frontend/dist/
+          source: "backend/target/backend-0.0.1-SNAPSHOT.jar, frontend/dist/"
           target: /var/www/portfolio/
 
       # 8️⃣ Redémarrer le backend via systemd
