@@ -13,6 +13,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/*border-box évite que padding/border 
+agrandissent la largeur d'un élément 
+au-delà de sa valeur prévue*/
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -25,9 +32,12 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  /* align content to the top (do not vertically center the whole app) */
+  align-items: flex-start;
+  justify-content: center; /* center horizontally */
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden; /* prevent unwanted horizontal sliding */
 }
 
 h1 {

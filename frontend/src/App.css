@@ -1,7 +1,8 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  /* allow the app to take the full viewport width so pages can be full-bleed */
+  width: 100%;
+  margin: 0;
+  padding: 0;
   text-align: center;
 }
 
@@ -39,4 +40,97 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Projects grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+  align-items: start;
+}
+
+.project-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: left;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.project-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.15rem;
+}
+
+.project-desc {
+  color: rgba(255,255,255,0.75);
+  flex: 1 1 auto;
+  margin-bottom: 0.75rem;
+}
+
+.project-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.project-link {
+  color: #646cff;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Header styles */
+.site-header {
+  --site-header-height: 72px; /* utilisé pour le padding-top du contenu */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  background: rgba(0,0,0,0.25);
+  width: 100%;
+}
+.site-header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: var(--site-header-height);
+  justify-content: space-between;
+}
+.brand a { color: inherit; text-decoration: none; font-weight: 700; display:block; text-align: right }
+.brand { margin-left: 0; }
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+.nav-list a { color: rgba(255,255,255,0.85); text-decoration: none }
+.nav-list a.active { color: #646cff; border-bottom: 2px solid #646cff; padding-bottom: 2px }
+
+@media (max-width: 720px) {
+  .site-header-inner { flex-direction: column; align-items: flex-start }
+  .nav-list { width: 100%; justify-content: space-between }
+}
+
+.app-main {
+  width: 100%;
+  margin: 0;
+  padding: 1rem;
+  padding-top: calc(var(--site-header-height) + 1.5rem);
 }
