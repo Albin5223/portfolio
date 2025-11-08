@@ -38,7 +38,7 @@ export default function ProjectList() {
 
   return (
     <section className="card">
-      <h2>Mes projets</h2>
+      <h2>Mes projets universitaires</h2>
 
       {loading && <p>Chargement des projets…</p>}
 
@@ -74,6 +74,9 @@ export default function ProjectList() {
           ))}
         </div>
       )}
+
+      <h2>Mes projets personnels</h2>
     </section>
+
   );
 }

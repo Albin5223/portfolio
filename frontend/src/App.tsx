@@ -1,4 +1,5 @@
 import './App.css'
+import './header.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Home from './pages/Home'
@@ -12,6 +13,8 @@ function App() {
     <BrowserRouter>
       <div>
         <Header />
+        {/* spacer pour réserver la place du header dans le flux */}
+        <div className="site-header-spacer" aria-hidden="true" />
 
         <main className="app-main">
           <Routes>
