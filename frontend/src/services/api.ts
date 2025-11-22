@@ -1,11 +1,12 @@
 import axios from "axios";
 
-const API_URL_PROJECTS = import.meta.env.VITE_API_URL+"/projects";
+const API_URL_PROJECTS_PERSO = import.meta.env.VITE_API_URL+"/projects/personal";
+const API_URL_PROJECTS_SCHOOL = import.meta.env.VITE_API_URL+"/projects/school";
 const API_URL_FORMATIONS = import.meta.env.VITE_API_URL+"/formations";
 
-export const getProjects = async () => {
+export const getPersonalProjects = async () => {
   try {
-    const res = await axios.get(API_URL_PROJECTS);
+    const res = await axios.get(API_URL_PROJECTS_PERSO);
     return res.data;
   } catch (err) {
     console.error("Erreur récupération projets :", err);
@@ -13,13 +14,13 @@ export const getProjects = async () => {
   }
 };
 
-export const addProject = async (project: { title: string; description: string; githubUrl: string }) => {
+export const getSchoolProjects = async () => {
   try {
-    const res = await axios.post(API_URL_PROJECTS, project);
+    const res = await axios.get(API_URL_PROJECTS_SCHOOL);
     return res.data;
   } catch (err) {
-    console.error("Erreur ajout projet :", err);
-    return null;
+    console.error("Erreur récupération projets :", err);
+    return [];
   }
 };
 

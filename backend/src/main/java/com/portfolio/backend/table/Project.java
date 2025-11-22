@@ -14,6 +14,7 @@ public class Project {
     private String title;
     private String description;
     private String githubUrl;
+    private boolean isPersonal;
 
     public Long getId() { return id; }
     public String getTitle() { return title; }
@@ -22,4 +23,6 @@ public class Project {
     public void setDescription(String description) { this.description = description; }
     public String getGithubUrl() { return githubUrl; }
     public void setGithubUrl(String githubUrl) { this.githubUrl = githubUrl; }
+    public boolean isPersonal() { return isPersonal; }
+    public void setPersonal(boolean isPersonal) { this.isPersonal = isPersonal; }
 }

@@ -1,4 +1,3 @@
-import ProjectList from "./Projects";
 
 export default function Home() {
   return (

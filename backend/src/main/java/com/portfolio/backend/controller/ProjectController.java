@@ -18,10 +18,28 @@ public class ProjectController {
         this.repo = repo;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Project> getProjects() {
         return repo.findAll();
     }
+
+    @GetMapping("/personal")
+    public List<Project> getPersonalProjects() {
+        return repo.findAll().stream()
+                .filter(Project::isPersonal)
+                .toList();
+    }
+
+    @GetMapping("/school")
+    public List<Project> getSchoolProjects() {
+        return repo.findAll().stream()
+                .filter(project -> !project.isPersonal())
+                .toList();
+    }
+
+
+
+
 
     /*
      * Exemple de requête CURL pour ajouter un projet :

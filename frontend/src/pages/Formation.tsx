@@ -7,6 +7,7 @@ import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
+import MusiqueIcon from '@mui/icons-material/MusicNote';
 import HotelIcon from '@mui/icons-material/Hotel';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import Typography from '@mui/material/Typography';
@@ -18,9 +19,11 @@ import { getFormations } from '../services/api';
 interface Formation {
   id : number;
   title : string;
-  dateStart: Date;
-  dateEnd: Date;
+  // le backend peut renvoyer une string ISO ou un objet Date
+  dateStart: string | Date;
+  dateEnd: string | Date;
   description: string;
+  typeFormation: string;
 }
 
 
@@ -84,7 +87,7 @@ function ItemContent(formation: Formation) {
         <TimelineSeparator>
           <TimelineConnector />
           <TimelineDot>
-            <FastfoodIcon />
+            {selectIcon(formation.typeFormation)}
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
@@ -97,9 +100,9 @@ function RightContent(formation: Formation){
   return (
     <TimelineContent sx={{ py: '12px', px: 2 }}>
           <Typography variant="h6" component="span">
-            Eat
+            {formation.title}
           </Typography>
-          <Typography>Because you need strength</Typography>
+          <Typography>{formation.description}</Typography>
     </TimelineContent>
   )
 }
@@ -112,43 +115,25 @@ function LeftContent(formation: Formation){
           variant="body2"
           color="text.secondary"
         >
-          10 semptembre 2019 - 15 juin 2021
+          {formatDate(formation.dateStart)} - {formatDate(formation.dateEnd)}
         </TimelineOppositeContent>
   )
 }
-/*
-function timeLine(){
-  return (
-    <TimelineItem>
-          <TimelineSeparator>
-            <TimelineConnector />
-            <TimelineDot color="primary" variant="outlined">
-              <HotelIcon />
-            </TimelineDot>
-            <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: '12px', px: 2 }}>
-            <Typography variant="h6" component="span">
-              Sleep
-            </Typography>
-            <Typography>Because you need rest</Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-            <TimelineDot color="secondary">
-              <RepeatIcon />
-            </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: '12px', px: 2 }}>
-            <Typography variant="h6" component="span">
-              Repeat
-            </Typography>
-            <Typography>Because this is the life you love!</Typography>
-          </TimelineContent>
-        </TimelineItem>
-  )
+
+function formatDate(d: string | Date) {
+  if (!d) return "";
+  const dateObj = typeof d === 'string' ? new Date(d) : d;
+  if (Number.isNaN(dateObj.getTime())) return String(d);
+  return new Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).format(dateObj);
 }
-  */
+
+function selectIcon(typeFormation: string){
+  switch(typeFormation){
+    case 'Informatique':
+      return <LaptopMacIcon />;
+    case 'Musique':
+      return <MusiqueIcon />;
+    default:
+      return <MusiqueIcon />;
+  }
+}
