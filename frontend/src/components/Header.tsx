@@ -14,7 +14,7 @@ export default function Header() {
       const delta = currentY - lastY.current;
 
       // petit seuil pour ignorer micro-mouvements
-      const THRESHOLD = 5;
+      const THRESHOLD = 25;
       if (Math.abs(delta) < THRESHOLD) return;
 
       if (currentY > lastY.current) {
@@ -41,6 +41,9 @@ export default function Header() {
 
         <nav aria-label="Navigation principale">
           <ul className="nav-list">
+            <li>
+              <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>Présentation</NavLink>
+            </li>
             <li>
               <NavLink to="/projects" className={({ isActive }) => (isActive ? "active" : "")}>Projets</NavLink>
             </li>
