@@ -27,6 +27,14 @@ export const getSchoolProjects = async () => {
 export const getFormations = async () => {
   try {
     const res = await axios.get(API_URL_FORMATIONS);
+    //Transform date strings to Date objects
+    res.data = res.data.map((formation: any) => ({
+      ...formation,
+      dateStart: new Date(formation.dateStart),
+      dateEnd: new Date(formation.dateEnd),
+    }));
+    // Sort formations by dateEnd descending
+    res.data.sort((a: any, b: any) => b.dateEnd - a.dateEnd);
     return res.data;
   } catch (err) {
     console.error("Erreur récupération formations :", err);

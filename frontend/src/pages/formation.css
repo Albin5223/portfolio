@@ -1,0 +1,127 @@
+.formation {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: clamp(2.5rem, 5vw, 4.5rem) 1.5rem clamp(4rem, 6vw, 7rem);
+  background: linear-gradient(180deg, rgba(12, 17, 38, 0.7), rgba(12, 17, 38, 0.9));
+  color: #e8edff;
+}
+
+.formation-inner {
+  width: min(1100px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formation-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formation-kicker {
+  margin: 0;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  color: #9fb4ff;
+}
+
+.formation-title {
+  margin: 0;
+  font-size: clamp(2rem, 2vw + 1rem, 2.4rem);
+}
+
+.formation-lede {
+  margin: 0;
+  color: rgba(232, 237, 255, 0.8);
+  max-width: 68ch;
+}
+
+.formation-status,
+.formation-error,
+.formation-empty {
+  margin: 0;
+  color: rgba(232, 237, 255, 0.8);
+}
+
+.formation-error {
+  color: #ff9b9b;
+}
+
+.formation-timeline {
+  margin: 0;
+  padding: 0;
+}
+
+.formation-item {
+  align-items: stretch;
+}
+
+.formation-date {
+  color: rgba(232, 237, 255, 0.65);
+  font-size: 0.95rem;
+}
+
+.formation-separator {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.formation-connector {
+  background: linear-gradient(180deg, rgba(124, 139, 255, 0.35), rgba(94, 210, 255, 0.35));
+}
+
+.formation-dot {
+  background: linear-gradient(135deg, #7c8bff, #5ed2ff);
+  box-shadow: 0 8px 18px rgba(94, 210, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.formation-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  color: #e8edff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.32);
+}
+
+.formation-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: linear-gradient(120deg, #7c8bff, #5ed2ff);
+  color: #0b1021;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+
+.formation-card-title {
+  margin: 0 0 0.35rem 0;
+}
+
+.formation-card-desc {
+  margin: 0;
+  color: rgba(232, 237, 255, 0.78);
+}
+
+@media (max-width: 900px) {
+  .formation {
+    padding: 2.2rem 1.1rem 3.4rem;
+  }
+
+  .formation-date {
+    text-align: right;
+  }
+}
+
+@media (max-width: 640px) {
+  .formation-date {
+    text-align: left;
+    margin-bottom: 0.4rem;
+  }
+}

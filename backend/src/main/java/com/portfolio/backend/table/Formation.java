@@ -15,6 +15,7 @@ public class Formation {
     private Date dateStart;
     private Date dateEnd;
     private String description;
+    private String typeFormation;
 
     public Long getId() { return id; }
     public String getTitle() { return title; }
@@ -25,4 +26,6 @@ public class Formation {
     public void setDateStart(Date dateStart) { this.dateStart = dateStart; }
     public Date getDateEnd() { return dateEnd; }
     public void setDateEnd(Date dateEnd) { this.dateEnd = dateEnd; }
+    public String getTypeFormation() { return typeFormation; }
+    public void setTypeFormation(String typeFormation) { this.typeFormation = typeFormation; }
 }
