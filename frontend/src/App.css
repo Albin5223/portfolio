@@ -55,6 +55,10 @@
   margin-bottom: 0.75rem;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .project-actions {
   display: flex;
   gap: 0.5rem;

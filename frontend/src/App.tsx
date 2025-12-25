@@ -1,6 +1,5 @@
 import './App.css'
 import './header.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Home from './pages/Home'
 import ProjectList from './pages/Projects'
@@ -10,23 +9,18 @@ import Experiences from './pages/Experiences'
 
 function App() {
   return (
-    <BrowserRouter>
-      <div>
-        <Header />
-        {/* spacer pour réserver la place du header dans le flux */}
-        <div className="site-header-spacer" aria-hidden="true" />
+    <div>
+      <Header />
+      <div className="site-header-spacer" aria-hidden="true" />
 
-        <main className="app-main">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/projects" element={<ProjectList />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/formation" element={<Formation />} />
-            <Route path="/experiences" element={<Experiences />} />
-          </Routes>
-        </main>
-      </div>
-    </BrowserRouter>
+      <main className="app-main">
+        <section id="home"><Home /></section>
+        <section id="projects"><ProjectList /></section>
+        <section id="experiences"><Experiences /></section>
+        <section id="formation"><Formation /></section>
+        <section id="contact"><Contact /></section>
+      </main>
+    </div>
   );
 }
 

@@ -1,61 +1,123 @@
-/* Styles spécifiques pour le comportement d'apparition/disparition du header */
-/* Définition globale de la hauteur du header (utilisée pour le padding du contenu) */
 :root {
   --site-header-height: 72px;
+  --header-bg: rgba(12, 17, 38, 0.6);
+  --header-border: rgba(255, 255, 255, 0.12);
+  --header-text: #e8edff;
 }
 
 .site-header {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  inset: 0 0 auto 0;
   height: var(--site-header-height);
   display: flex;
   align-items: center;
-  background: #5a5757; /* couleur grise solide */
-  border-bottom: 1px solid rgba(119, 91, 91, 0.06);
+  background: var(--header-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: none;
   transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms ease, background 160ms ease;
   z-index: 1000;
 }
 
-/* Masque le header en le décalant vers le haut */
 .site-header--hidden {
   transform: translateY(-110%);
   box-shadow: none;
 }
 
-/* Quand le header est visible, renforce la séparation visuelle */
 .site-header:not(.site-header--hidden) {
-  background: #7e7b7b;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.42);
 }
 
 .site-header-inner {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.25rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.25rem;
+  position: relative;
+  z-index: 2;
+  color: var(--header-text);
 }
 
-/* Assure que le contenu principal commence sous le header fixe
-   - Utilise une valeur de repli (72px) si la variable CSS est absente. */
+.site-header-glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(124, 139, 255, 0.14), rgba(94, 210, 255, 0.12));
+  opacity: 0.55;
+  filter: blur(38px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #7c8bff, #5ed2ff);
+  color: #0b1021;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  box-shadow: 0 10px 25px rgba(94, 210, 255, 0.35);
+}
+
+.brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+.brand-name { font-size: 1.05rem; font-weight: 700; }
+.brand-role { font-size: 0.9rem; color: rgba(232, 237, 255, 0.75); }
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  color: rgba(232, 237, 255, 0.9);
+  text-decoration: none;
+  padding: 0.55rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  transition: color 140ms ease, border-color 140ms ease, background 140ms ease;
+  font-weight: 600;
+}
+
+.nav-list a:hover {
+  color: #ffffff;
+  border-color: var(--header-border);
+  background: rgba(255, 255, 255, 0.04);
+}
+
 .app-main {
-  /* Ne pas ajouter de padding égal à la hauteur du header ici car
-     nous réservons déjà cet espace avec .site-header-spacer dans le DOM.
-     Gardons juste un petit padding vertical pour l'espacement visuel. */
   padding-top: 0.5rem;
   scroll-padding-top: var(--site-header-height, 72px);
 }
 
-/* Petite règle de sécurité pour les éléments qui peuvent créer un stacking context */
 .project-card { position: relative; z-index: 0; }
 
-/* Espace réservé (spacer) égal à la hauteur du header pour empêcher
-   le contenu d'être recouvert lorsque le header apparaît/disparaît */
 .site-header-spacer {
   height: var(--site-header-height, 72px);
   width: 100%;
+}
+
+@media (max-width: 900px) {
+  .nav-list { gap: 0.35rem; }
+  .nav-list a { padding: 0.5rem 0.55rem; font-size: 0.95rem; }
+}
+
+@media (max-width: 720px) {
+  .site-header-inner { gap: 0.75rem; }
+  .brand-role { display: none; }
 }

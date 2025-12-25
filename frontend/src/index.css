@@ -38,6 +38,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden; /* prevent unwanted horizontal sliding */
+  background: var(--home-gradient, #0f172a);
 }
 
 h1 {
