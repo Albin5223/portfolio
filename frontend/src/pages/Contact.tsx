@@ -11,14 +11,14 @@ const contactLinks = [
   },
   {
     label: "LinkedIn",
-    value: "linkedin.com/in/parisalbin",
-    href: "https://www.linkedin.com/in/parisalbin",
+    value: "linkedin.com/in/albin-paris",
+    href: "https://www.linkedin.com/in/albin-paris-23ab5b234/",
     detail: "Actualités, veille et réseau pro.",
   },
   {
     label: "GitHub",
-    value: "github.com/parisalbin",
-    href: "https://github.com/parisalbin",
+    value: "github.com/Albin5223",
+    href: "https://github.com/Albin5223",
     detail: "Projets open source et expérimentations.",
   },
 ];
