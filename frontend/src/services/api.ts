@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL_PROJECTS_PERSO = import.meta.env.VITE_API_URL+"/projects/personal";
 const API_URL_PROJECTS_SCHOOL = import.meta.env.VITE_API_URL+"/projects/school";
 const API_URL_FORMATIONS = import.meta.env.VITE_API_URL+"/formations";
-const API_URL_CONTACT = import.meta.env.VITE_API_URL+"/contact";
+const API_URL_CONTACT = import.meta.env.VITE_API_URL+"/contacts/all";
 
 export const getPersonalProjects = async () => {
   try {
@@ -48,7 +48,7 @@ export const getContact = async () => {
     const res = await axios.get(API_URL_CONTACT);
     return res.data;
   } catch (err) {
-    console.error("Erreur récupération formations :", err);
+    console.error("Erreur récupération contacts :", err);
     return [];
   }
 };

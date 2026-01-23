@@ -81,7 +81,7 @@ export default function Contact() {
         </div>
 
         <div className="contact-grid">
-          {contactLinks.map((item) => (
+          {contact.map((item) => (
             <a className="contact-card" key={item.label} href={item.href} target="_blank" rel="noreferrer">
               <div className="contact-card-head">
                 <span className="contact-pill">{item.label}</span>
