@@ -1,0 +1,175 @@
+.contact {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: clamp(2.5rem, 5vw, 4.5rem) 1.5rem clamp(4rem, 6vw, 7rem);
+  background: linear-gradient(180deg, rgba(12, 17, 38, 0.65), rgba(12, 17, 38, 0.9));
+  color: #e8edff;
+}
+
+.contact-inner {
+  width: min(1100px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.contact-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.contact-kicker {
+  margin: 0;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  color: #9fb4ff;
+}
+
+.contact-title {
+  margin: 0;
+  font-size: clamp(2.1rem, 2vw + 1rem, 2.6rem);
+}
+
+.contact-lede {
+  margin: 0;
+  color: rgba(232, 237, 255, 0.82);
+  max-width: 72ch;
+}
+
+.contact-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.contact-btn {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.8rem 1.35rem;
+  font-weight: 650;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease, border-color 140ms ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.contact-btn.primary {
+  background: linear-gradient(120deg, #7c8bff, #5ed2ff);
+  color: #0b1021;
+  box-shadow: 0 10px 30px rgba(94, 210, 255, 0.25);
+}
+
+.contact-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 34px rgba(94, 210, 255, 0.35);
+}
+
+.contact-btn.ghost {
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #e8edff;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.contact-btn.ghost:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.contact-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  color: #e8edff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.32);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(94, 210, 255, 0.22);
+  border-color: rgba(94, 210, 255, 0.35);
+}
+
+.contact-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.contact-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: linear-gradient(120deg, #7c8bff, #5ed2ff);
+  color: #0b1021;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.contact-arrow {
+  color: rgba(232, 237, 255, 0.8);
+  font-size: 1.1rem;
+}
+
+.contact-value {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
+.contact-detail {
+  margin: 0;
+  color: rgba(232, 237, 255, 0.75);
+}
+
+.contact-note {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  color: rgba(232, 237, 255, 0.85);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+}
+
+.contact-note-title {
+  margin: 0 0 0.35rem 0;
+  font-weight: 700;
+}
+
+.contact-note-body {
+  margin: 0;
+  color: rgba(232, 237, 255, 0.75);
+}
+
+@media (max-width: 720px) {
+  .contact {
+    padding: 2.2rem 1.1rem 3.4rem;
+  }
+
+  .contact-actions {
+    width: 100%;
+  }
+
+  .contact-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

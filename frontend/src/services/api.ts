@@ -3,6 +3,7 @@ import axios from "axios";
 const API_URL_PROJECTS_PERSO = import.meta.env.VITE_API_URL+"/projects/personal";
 const API_URL_PROJECTS_SCHOOL = import.meta.env.VITE_API_URL+"/projects/school";
 const API_URL_FORMATIONS = import.meta.env.VITE_API_URL+"/formations";
+const API_URL_CONTACT = import.meta.env.VITE_API_URL+"/contact";
 
 export const getPersonalProjects = async () => {
   try {
@@ -35,6 +36,16 @@ export const getFormations = async () => {
     }));
     // Sort formations by dateEnd descending
     res.data.sort((a: any, b: any) => b.dateEnd - a.dateEnd);
+    return res.data;
+  } catch (err) {
+    console.error("Erreur récupération formations :", err);
+    return [];
+  }
+};
+
+export const getContact = async () => {
+  try {
+    const res = await axios.get(API_URL_CONTACT);
     return res.data;
   } catch (err) {
     console.error("Erreur récupération formations :", err);
