@@ -170,15 +170,15 @@
 }
 
 @media (max-width: 640px) {
-  .home {
-    padding: 1.5rem 1.1rem 3.5rem;
+  .hero {
+    grid-template-columns: 1fr;
+    justify-items: center;
   }
-
-  .hero-photo {
-    min-height: 260px;
+  .hero-text {
+    text-align: center;
+    align-items: center;
   }
-
-  .hero-actions {
-    width: 100%;
+  .hero-visual img {
+    max-width: 200px;
   }
 }

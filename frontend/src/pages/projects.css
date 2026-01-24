@@ -216,12 +216,14 @@
   justify-content: flex-end;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 400px) {
   .projects {
-    padding: 2rem 1.1rem 3.2rem;
+    padding: 2rem 0.9rem 3rem;
   }
-
-  .projects-group {
-    padding: 1rem;
+  .projects-groups {
+    grid-template-columns: 1fr;
+  }
+  .project-card {
+    width: 100%;
   }
 }
