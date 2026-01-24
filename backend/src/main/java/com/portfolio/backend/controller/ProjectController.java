@@ -36,21 +36,4 @@ public class ProjectController {
                 .filter(project -> !project.isPersonal())
                 .toList();
     }
-
-
-
-
-
-    /*
-     * Exemple de requête CURL pour ajouter un projet :
-     * curl -X POST http://localhost:8080/api/projects \
-        -H "Content-Type: application/json" \
-        -d '{"title":"Portfolio","description":"Mon site perso","githubUrl":"https://github.com"}'
-
-     */
-
-    @PostMapping
-    public Project addProject(@RequestBody Project project) {
-        return repo.save(project);
-    }
 }
