@@ -2,27 +2,6 @@ import "./contact.css";
 import { useEffect, useState } from "react";
 import { getContact } from "../services/api";
 
-const contactLinks = [
-  {
-    label: "Email",
-    value: "paris.albin23@gmail.com",
-    href: "mailto:paris.albin23@gmail.com",
-    detail: "Je réponds en général sous 24h.",
-  },
-  {
-    label: "LinkedIn",
-    value: "linkedin.com/in/albin-paris",
-    href: "https://www.linkedin.com/in/albin-paris-23ab5b234/",
-    detail: "Actualités, veille et réseau pro.",
-  },
-  {
-    label: "GitHub",
-    value: "github.com/Albin5223",
-    href: "https://github.com/Albin5223",
-    detail: "Projets open source et expérimentations.",
-  },
-];
-
 interface Contact {
   id: number;
   label: string;
@@ -33,31 +12,31 @@ interface Contact {
 
 export default function Contact() {
   const [contact, setContact] = useState<Contact[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
-    useEffect(() => {
-        let mounted = true;
-        (async () => {
-          setLoading(true);
-          setError(null);
-          try {
-            const data = await getContact();
-            if (!mounted) return;
-            setContact(Array.isArray(data) ? data : []);
-          } catch (e) {
-            console.error(e);
-            if (!mounted) return;
-            setError("Impossible de récupérer les formations.");
-          } finally {
-            if (mounted) setLoading(false);
-          }
-        })();
-    
-        return () => {
-          mounted = false;
-        };
-      }, []);
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await getContact();
+        if (!mounted) return;
+        setContact(Array.isArray(data) ? data : []);
+      } catch (e) {
+        console.error(e);
+        if (!mounted) return;
+        setError("Impossible de récupérer les contacts.");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
     
   return (
     <section className="contact">
@@ -81,18 +60,37 @@ export default function Contact() {
         </div>
 
         <div className="contact-grid">
-          {contact.map((item) => (
-            <a className="contact-card" key={item.label} href={item.href} target="_blank" rel="noreferrer">
-              <div className="contact-card-head">
-                <span className="contact-pill">{item.label}</span>
-                <span className="contact-arrow" aria-hidden="true">
-                  →
-                </span>
-              </div>
-              <p className="contact-value">{item.value}</p>
-              <p className="contact-detail">{item.detail}</p>
-            </a>
-          ))}
+          {loading && (
+            <p className="contact-state" role="status">
+              Chargement des contacts...
+            </p>
+          )}
+
+          {error && (
+            <p className="contact-state error" role="alert">
+              {error}
+            </p>
+          )}
+
+          {!loading && !error && contact.length === 0 && (
+            <p className="contact-state" role="status">
+              Aucun contact disponible pour le moment.
+            </p>
+          )}
+
+          {!loading && !error &&
+            contact.map((item) => (
+              <a className="contact-card" key={item.label} href={item.href} target="_blank" rel="noreferrer">
+                <div className="contact-card-head">
+                  <span className="contact-pill">{item.label}</span>
+                  <span className="contact-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </div>
+                <p className="contact-value">{item.value}</p>
+                <p className="contact-detail">{item.detail}</p>
+              </a>
+            ))}
         </div>
 
         <div className="contact-note">
