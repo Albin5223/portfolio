@@ -4,6 +4,7 @@ const API_URL_PROJECTS_PERSO = import.meta.env.VITE_API_URL+"/projects/personal"
 const API_URL_PROJECTS_SCHOOL = import.meta.env.VITE_API_URL+"/projects/school";
 const API_URL_FORMATIONS = import.meta.env.VITE_API_URL+"/formations";
 const API_URL_CONTACT = import.meta.env.VITE_API_URL+"/contacts/all";
+const API_URL_EXPERIENCES = import.meta.env.VITE_API_URL+"/experiences/all";
 
 export const getPersonalProjects = async () => {
   try {
@@ -49,6 +50,16 @@ export const getContact = async () => {
     return res.data;
   } catch (err) {
     console.error("Erreur récupération contacts :", err);
+    return [];
+  }
+};
+
+export const getExperiences = async () => {
+  try {
+    const res = await axios.get(API_URL_EXPERIENCES);
+    return res.data;
+  } catch (err) {
+    console.error("Erreur récupération expériences :", err);
     return [];
   }
 };
