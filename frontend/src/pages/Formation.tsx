@@ -1,14 +1,6 @@
-import Timeline from "@mui/lab/Timeline";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
-import TimelineDot from "@mui/lab/TimelineDot";
 import LaptopMacIcon from "@mui/icons-material/LaptopMac";
 import MusiqueIcon from "@mui/icons-material/MusicNote";
-import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getFormations } from "../services/api";
 import "./formation.css";
 
@@ -26,6 +18,8 @@ export default function Formation() {
   const [formation, setFormation] = useState<Formation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [visibleMap, setVisibleMap] = useState<Record<number, boolean>>({});
+  const cardRefs = useRef<Record<number, HTMLElement | null>>({});
 
   useEffect(() => {
       let mounted = true;
@@ -49,6 +43,33 @@ export default function Formation() {
         mounted = false;
       };
     }, []);
+
+  useEffect(() => {
+    if (!formation.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const targetId = Number((entry.target as HTMLElement).dataset.id);
+          if (entry.isIntersecting && targetId) {
+            setVisibleMap((prev) => (prev[targetId] ? prev : { ...prev, [targetId]: true }));
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.28 }
+    );
+
+    Object.entries(cardRefs.current).forEach(([id, el]) => {
+      if (el) {
+        el.dataset.id = id;
+        observer.observe(el);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [formation]);
 
   return (
     <section id="formation" className="formation">
@@ -74,46 +95,55 @@ export default function Formation() {
         )}
 
         {!loading && !error && formation.length > 0 && (
-          <Timeline position="alternate" className="formation-timeline">
-            {formation.map((item) => (
-              FormationItem({ formation: item })
+          <div className="formation-timeline">
+            {formation.map((item, index) => (
+              <FormationCard
+                key={item.id}
+                formation={item}
+                index={index}
+                isVisible={Boolean(visibleMap[item.id])}
+                setRef={(el) => {
+                  cardRefs.current[item.id] = el;
+                }}
+              />
             ))}
-          </Timeline>
+          </div>
         )}
       </div>
     </section>
   );
 }
 
-function FormationItem({ formation }: { formation: Formation }) {
+function FormationCard({
+  formation,
+  index,
+  isVisible,
+  setRef,
+}: {
+  formation: Formation;
+  index: number;
+  isVisible: boolean;
+  setRef: (el: HTMLElement | null) => void;
+}) {
   return (
-    <TimelineItem className="formation-item">
-      <TimelineOppositeContent
-        sx={{ m: 'auto 0' }}
-        className="formation-date"
-        align={formation.id % 2 === 0 ? "right" : "left"}
-      >
-        {formatDate(formation.dateStart)} - {formatDate(formation.dateEnd)}
-      </TimelineOppositeContent>
-
-      <TimelineSeparator className="formation-separator">
-        <TimelineConnector className="formation-connector" />
-        <TimelineDot className="formation-dot">
-          {selectIcon(formation.typeFormation)}
-        </TimelineDot>
-        <TimelineConnector className="formation-connector" />
-      </TimelineSeparator>
-
-      <TimelineContent className="formation-card" sx={{ py: '12px', px: 2 }}>
-        <div className="formation-badge">{formation.typeFormation || "Formation"}</div>
-        <Typography component="h3" variant="h6" className="formation-card-title">
-          {formation.title}
-        </Typography>
-        <Typography component="p" className="formation-card-desc">
-          {formation.description}
-        </Typography>
-      </TimelineContent>
-    </TimelineItem>
+    <article
+      ref={setRef}
+      className={`formation-card timeline-card ${index % 2 === 0 ? "is-left" : "is-right"} ${
+        isVisible ? "is-visible" : ""
+      }`}
+    >
+      <div className="formation-card-top">
+        <div className="formation-icon-wrap">{selectIcon(formation.typeFormation)}</div>
+        <div className="formation-meta">
+          <p className="formation-type">{formation.typeFormation || "Formation"}</p>
+          <p className="formation-dates">
+            {formatDate(formation.dateStart)} — {formatDate(formation.dateEnd)}
+          </p>
+        </div>
+      </div>
+      <h3 className="formation-card-title">{formation.title}</h3>
+      <p className="formation-card-desc">{formation.description}</p>
+    </article>
   );
 }
 
