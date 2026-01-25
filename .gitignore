@@ -9,10 +9,6 @@ backend/target/
 ## H2 data
 backend/data/
 
-
-## SQL dumps / initialization files (don't commit generated or local sql files)
-*.sql
-
 ## IDE
 .vscode/
 # Ignore tous les .env par défaut

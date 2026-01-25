@@ -8,10 +8,10 @@ import "swiper/css/pagination";
 import { getExperiences } from "../services/api";
 
 type Experience = {
-  id?: number;
-  poste: string;
-  entreprise: string;
-  periode: string;
+  id: number;
+  startDate: string | Date | null;
+  endDate: string | Date | null;
+  intitule: string;
   description: string;
 };
 
@@ -30,13 +30,19 @@ export default function Experiences() {
           setItems([]);
           return;
         }
-        const normalized: Experience[] = data.map((exp: any) => ({
-          id: exp.id ?? exp._id,
-          poste: exp.poste ?? exp.title ?? "Poste",
-          entreprise: exp.entreprise ?? exp.company ?? "Entreprise",
-          periode: exp.periode ?? exp.period ?? "Période non renseignée",
-          description: exp.description ?? "",
-        }));
+        const normalized: Experience[] = data
+          .map((exp: any) => ({
+            id: exp.id ?? exp._id,
+            startDate: exp.startDate ? new Date(exp.startDate) : null,
+            endDate: exp.endDate ? new Date(exp.endDate) : null,
+            intitule: exp.intitule ?? exp.title ?? "Expérience",
+            description: exp.description ?? "",
+          }))
+          .sort((a, b) => {
+            const aDate = a.endDate ? new Date(a.endDate).getTime() : 0;
+            const bDate = b.endDate ? new Date(b.endDate).getTime() : 0;
+            return bDate - aDate;
+          });
         setItems(normalized);
       } catch (e) {
         console.error(e);
@@ -74,22 +80,22 @@ export default function Experiences() {
 
         {!loading && !error && experiences.length > 0 && (
           <div className="experiences-viewport">
+            <div className="experiences-progress swiper-pagination" />
             <Swiper
               modules={[Pagination]}
               centeredSlides
               spaceBetween={18}
               slidesPerView={1.1}
               grabCursor
-              pagination={{ type: "progressbar", clickable: false }}
+              pagination={{ type: "progressbar", el: ".experiences-progress", clickable: false }}
               className="experiences-swiper"
             >
               {experiences.map((exp, idx) => (
                 <SwiperSlide key={exp.id ?? idx} className="experience-slide">
                   <article className="experience-card">
                     <div className="experience-top">
-                      <div className="experience-badge">{exp.periode}</div>
-                      <h4 className="experience-title">{exp.poste}</h4>
-                      <p className="experience-desc">{exp.entreprise}</p>
+                      <div className="experience-badge">{renderPeriod(exp.startDate, exp.endDate)}</div>
+                      <h4 className="experience-title">{exp.intitule}</h4>
                     </div>
                     <p className="experience-body">{exp.description}</p>
                   </article>
@@ -101,4 +107,17 @@ export default function Experiences() {
       </div>
     </section>
   );
+}
+
+function formatDate(d: string | Date | null) {
+  if (!d) return "";
+  const dateObj = typeof d === "string" ? new Date(d) : d;
+  if (Number.isNaN(dateObj.getTime())) return "";
+  return new Intl.DateTimeFormat("fr-FR", { month: "short", year: "numeric" }).format(dateObj);
+}
+
+function renderPeriod(start: string | Date | null, end: string | Date | null) {
+  const startText = formatDate(start);
+  const endText = formatDate(end);
+  return startText && endText ? `${startText} — ${endText}` : startText || endText || "Période";
 }

@@ -42,7 +42,7 @@
 .experiences-viewport {
   position: relative;
   overflow: visible;
-  padding: 0 4vw;
+  padding: 0 4vw 0;
 }
 
 .experiences-swiper {
@@ -148,11 +148,24 @@
 }
 
 /* Swiper progress bar */
-.swiper-pagination-progressbar {
+
+/* Progress bar above the cards */
+.experiences-progress {
+  position: static;
+  display: block;
   background: rgba(255, 255, 255, 0.08);
   height: 6px;
   border-radius: 999px;
   overflow: hidden;
+  width: 100%;
+  margin: 0 0 0.9rem 0;
+}
+
+.experiences-viewport .swiper-pagination-progressbar {
+  position: static;
+  background: transparent;
+  height: 100%;
+  margin: 0;
 }
 
 .swiper-pagination-progressbar-fill {
