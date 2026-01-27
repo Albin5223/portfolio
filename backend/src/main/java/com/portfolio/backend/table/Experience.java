@@ -14,6 +14,7 @@ public class Experience {
     private Date endDate;
     private String intitule;
     private String description;
+    private String entreprise;
 
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
@@ -25,4 +26,6 @@ public class Experience {
     public void setIntitule(String intitule) {this.intitule = intitule;}
     public String getDescription() {return description;}
     public void setDescription(String description) {this.description = description;}
+    public String getEntreprise() {return entreprise;}
+    public void setEntreprise(String entreprise) {this.entreprise = entreprise;}
 }

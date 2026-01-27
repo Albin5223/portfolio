@@ -178,4 +178,5 @@
     padding: 2rem 1.1rem 3.2rem;
   }
   .experience-card { padding: 1rem; }
+  .experiences-arrows { display: none; }
 }
