@@ -1,5 +1,6 @@
 import "./contact.css";
 import { useEffect, useState } from "react";
+import BlockIcon from "@mui/icons-material/Block";
 import { getContact } from "../services/api";
 
 interface Contact {
@@ -51,9 +52,16 @@ export default function Contact() {
         </header>
 
         <div className="contact-actions">
-          <a className="contact-btn primary" href="/cv.pdf" download>
-            Télécharger mon CV
-          </a>
+          <button
+            type="button"
+            className="contact-btn primary is-disabled"
+            disabled
+            aria-disabled="true"
+            title="CV bientôt disponible"
+          >
+            <BlockIcon fontSize="small" aria-hidden />
+            CV bientôt disponible
+          </button>
           <a className="contact-btn ghost" href="mailto:paris.albin23@gmail.com">
             Écrire un email
           </a>

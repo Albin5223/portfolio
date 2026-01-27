@@ -176,8 +176,10 @@
 .projects-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(4, 6, 12, 0.75);
-  backdrop-filter: blur(10px);
+  background: radial-gradient(circle at 20% 20%, rgba(94, 210, 255, 0.18), transparent 28%),
+    radial-gradient(circle at 80% 80%, rgba(124, 139, 255, 0.18), transparent 30%),
+    rgba(4, 6, 12, 0.82);
+  backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -186,34 +188,162 @@
 }
 
 .projects-modal {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
   border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 16px;
-  padding: 1.5rem;
-  width: min(560px, 100%);
+  border-radius: 18px;
+  padding: 1.7rem 1.6rem 1.5rem;
+  width: min(620px, 100%);
   color: #e8edff;
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  animation: modal-in 220ms ease;
+}
+
+.projects-modal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 18% 25%, rgba(94, 210, 255, 0.18), transparent 32%),
+    radial-gradient(circle at 82% 15%, rgba(124, 139, 255, 0.18), transparent 32%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 50%);
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.projects-modal-accent {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.06), transparent 40%);
+  filter: blur(26px);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.projects-modal-close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.9rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e8edff;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+  z-index: 2;
+}
+
+.projects-modal-close:hover {
+  transform: translateY(-2px);
+  border-color: rgba(94, 210, 255, 0.6);
+  background: rgba(94, 210, 255, 0.12);
 }
 
 .projects-modal-head {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 0.6rem;
   margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .projects-modal-head h3 {
   margin: 0;
 }
 
+.projects-modal-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  align-items: center;
+  text-align: center;
+}
+
+.projects-modal-kicker {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+  color: #9fb4ff;
+}
+
 .projects-modal-body {
   margin: 0 0 1rem 0;
   color: rgba(232, 237, 255, 0.8);
+  line-height: 1.55;
+  position: relative;
+  z-index: 1;
 }
 
 .projects-modal-actions {
   display: flex;
   justify-content: flex-end;
+  gap: 0.6rem;
+  position: relative;
+  z-index: 1;
+}
+
+.projects-modal-tech {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1.1rem 0 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.projects-modal-tech h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(232, 237, 255, 0.9);
+}
+
+.projects-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.projects-pill {
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 0.9rem;
+  color: #e8edff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.project-cta--solid {
+  background: linear-gradient(120deg, #7c8bff, #5ed2ff);
+  color: #0b1021;
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(94, 210, 255, 0.35);
+}
+
+.project-cta--solid:hover {
+  background: linear-gradient(120deg, #8ea1ff, #6de2ff);
+  transform: translateY(-1px);
+}
+
+@keyframes modal-in {
+  from {
+    transform: translateY(10px) scale(0.99);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 400px) {

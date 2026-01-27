@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+import type { Swiper as SwiperInstance } from "swiper";
 import "./experiences.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -19,6 +20,7 @@ export default function Experiences() {
   const [items, setItems] = useState<Experience[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [swiperRef, setSwiperRef] = useState<SwiperInstance | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +59,9 @@ export default function Experiences() {
 
   const experiences = items.length > 0 ? items : [];
 
+  const handlePrev = () => swiperRef?.slidePrev();
+  const handleNext = () => swiperRef?.slideNext();
+
   return (
     <section id="experiences" className="experiences">
       <div className="experiences-inner">
@@ -87,6 +92,7 @@ export default function Experiences() {
               spaceBetween={18}
               slidesPerView={1.1}
               grabCursor
+              onSwiper={setSwiperRef}
               pagination={{ type: "progressbar", el: ".experiences-progress", clickable: false }}
               className="experiences-swiper"
             >
@@ -102,6 +108,14 @@ export default function Experiences() {
                 </SwiperSlide>
               ))}
             </Swiper>
+            <div className="experiences-arrows">
+              <button type="button" className="experience-cta" onClick={handlePrev} disabled={!swiperRef}>
+                ← Précédent
+              </button>
+              <button type="button" className="experience-cta" onClick={handleNext} disabled={!swiperRef}>
+                Suivant →
+              </button>
+            </div>
           </div>
         )}
       </div>

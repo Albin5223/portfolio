@@ -14,6 +14,7 @@ public class Formation {
     private String title;
     private Date dateStart;
     private Date dateEnd;
+    private String etablissement;
     private String description;
     private String typeFormation;
 
@@ -28,4 +29,6 @@ public class Formation {
     public void setDateEnd(Date dateEnd) { this.dateEnd = dateEnd; }
     public String getTypeFormation() { return typeFormation; }
     public void setTypeFormation(String typeFormation) { this.typeFormation = typeFormation; }
+    public String getEtablissement() { return etablissement; }
+    public void setEtablissement(String etablissement) { this.etablissement = etablissement; }
 }

@@ -1,5 +1,6 @@
 import LaptopMacIcon from "@mui/icons-material/LaptopMac";
 import MusiqueIcon from "@mui/icons-material/MusicNote";
+import SchoolIcon from "@mui/icons-material/School";
 import { useEffect, useRef, useState } from "react";
 import { getFormations } from "../services/api";
 import "./formation.css";
@@ -10,6 +11,7 @@ interface Formation {
   dateStart: string | Date;
   dateEnd: string | Date;
   description: string;
+  etablissement: string;
   typeFormation: string;
 }
 
@@ -135,13 +137,13 @@ function FormationCard({
       <div className="formation-card-top">
         <div className="formation-icon-wrap">{selectIcon(formation.typeFormation)}</div>
         <div className="formation-meta">
-          <p className="formation-type">{formation.typeFormation || "Formation"}</p>
+          <p className="formation-title">{formation.title}</p>
           <p className="formation-dates">
             {formatDate(formation.dateStart)} — {formatDate(formation.dateEnd)}
           </p>
         </div>
       </div>
-      <h3 className="formation-card-title">{formation.title}</h3>
+      <h3 className="formation-card-etablissement">{formation.etablissement}</h3>
       <p className="formation-card-desc">{formation.description}</p>
     </article>
   );
@@ -160,6 +162,8 @@ function selectIcon(typeFormation: string) {
       return <LaptopMacIcon fontSize="small" />;
     case "Musique":
       return <MusiqueIcon fontSize="small" />;
+    case "Scolaire":
+      return <SchoolIcon fontSize="small" />;
     default:
       return <LaptopMacIcon fontSize="small" />;
   }

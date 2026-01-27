@@ -8,6 +8,7 @@ interface Project {
   description: string;
   githubUrl: string;
   personal: boolean;
+  technologies: string[];
 }
 
 export default function ProjectList() {
@@ -17,6 +18,19 @@ export default function ProjectList() {
   const [error, setError] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
+  // Prevent background scroll when a modal is open
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    if (selectedProject) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = originalOverflow;
+    }
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [selectedProject]);
 
   useEffect(() => {
     let mounted = true;
@@ -154,34 +168,50 @@ function ProjectsGroup({
 }
 
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  const hasTechnologies = Array.isArray(project.technologies) && project.technologies.length > 0;
+
   return (
     <div className="projects-modal-overlay" onClick={onClose}>
-      <div className="projects-modal" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="projects-modal"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="project-modal-title"
+      >
+        <div className="projects-modal-accent" aria-hidden />
+        <button className="projects-modal-close" type="button" onClick={onClose} aria-label="Fermer la fiche projet">
+          X
+        </button>
+
         <div className="projects-modal-head">
-          <div className="project-badge">{project.personal ? "Personnel" : "Universitaire"}</div>
-          <h3>{project.title}</h3>
+          <div className="projects-modal-title-wrap">
+            <p className="projects-modal-kicker">Projet</p>
+            <h3 id="project-modal-title">{project.title}</h3>
+          </div>
         </div>
+
         <p className="projects-modal-body">{project.description}</p>
 
-        {true &&(
+        {hasTechnologies && (
           <div className="projects-modal-tech">
-            <h4>Technologies utilisees :</h4>
-            <div className="hero-pills">
-              <span className="hero-pill">React + TypeScript</span>
-              <span className="hero-pill">Java / Spring Boot</span>
-              <span className="hero-pill">API REST</span>
-              <span className="hero-pill">CI/CD & Docker</span>
+            <h4>Stack utilisee</h4>
+            <div className="projects-pill-row">
+              {project.technologies.map((tech, index) => (
+                <span key={index} className="projects-pill">
+                  {tech}
+                </span>
+              ))}
             </div>
           </div>
         )}
 
-        {project.githubUrl && (
-          <a className="project-link" href={project.githubUrl} target="_blank" rel="noreferrer">
-            Ouvrir sur GitHub
-          </a>
-        )}
-
         <div className="projects-modal-actions">
+          {project.githubUrl && (
+            <a className="project-cta project-cta--solid" href={project.githubUrl} target="_blank" rel="noreferrer">
+              Voir sur GitHub
+            </a>
+          )}
           <button className="project-cta" type="button" onClick={onClose}>
             Fermer
           </button>
