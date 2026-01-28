@@ -1,7 +1,9 @@
 package com.portfolio.backend.table;
 
 import java.sql.Date;
+import java.util.List;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -13,7 +15,8 @@ public class Experience {
     private Date startDate;
     private Date endDate;
     private String intitule;
-    private String description;
+    @ElementCollection
+    private List<String> missions;
     private String entreprise;
 
     public Long getId() {return id;}
@@ -24,8 +27,8 @@ public class Experience {
     public void setEndDate(Date endDate) {this.endDate = endDate;}
     public String getIntitule() {return intitule;}
     public void setIntitule(String intitule) {this.intitule = intitule;}
-    public String getDescription() {return description;}
-    public void setDescription(String description) {this.description = description;}
+    public List<String> getMissions() {return missions;}
+    public void setMissions(List<String> missions) {this.missions = missions;}
     public String getEntreprise() {return entreprise;}
     public void setEntreprise(String entreprise) {this.entreprise = entreprise;}
 }

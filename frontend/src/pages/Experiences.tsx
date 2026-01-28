@@ -7,13 +7,15 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { getExperiences } from "../services/api";
+import { useI18n } from "../i18n";
 
 type Experience = {
   id: number;
   startDate: string | Date | null;
   endDate: string | Date | null;
+  entreprise: string;
   intitule: string;
-  description: string;
+  missions: string[];
 };
 
 export default function Experiences() {
@@ -21,6 +23,7 @@ export default function Experiences() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [swiperRef, setSwiperRef] = useState<SwiperInstance | null>(null);
+  const { t, lang } = useI18n();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,8 +40,13 @@ export default function Experiences() {
             id: exp.id ?? exp._id,
             startDate: exp.startDate ? new Date(exp.startDate) : null,
             endDate: exp.endDate ? new Date(exp.endDate) : null,
+            entreprise: exp.entreprise ?? exp.company ?? "",
             intitule: exp.intitule ?? exp.title ?? "Expérience",
-            description: exp.description ?? "",
+            missions: Array.isArray(exp.missions)
+              ? exp.missions.filter((m: any) => m != null).map((m: any) => String(m))
+              : exp.missions
+              ? [String(exp.missions)]
+              : [],
           }))
           .sort((a, b) => {
             const aDate = a.endDate ? new Date(a.endDate).getTime() : 0;
@@ -48,7 +56,7 @@ export default function Experiences() {
         setItems(normalized);
       } catch (e) {
         console.error(e);
-        setError("Impossible de récupérer les expériences.");
+        setError(t("experiences.error"));
       } finally {
         setLoading(false);
       }
@@ -66,21 +74,19 @@ export default function Experiences() {
     <section id="experiences" className="experiences">
       <div className="experiences-inner">
         <header className="experiences-header">
-          <p className="experiences-kicker">PARCOURS</p>
-          <h2 className="experiences-title">Expériences</h2>
-          <h4 className="experiences-lede">
-            Découvrez mes expériences professionnelles variées !
-          </h4>
+          <p className="experiences-kicker">{t("experiences.kicker")}</p>
+          <h2 className="experiences-title">{t("experiences.title")}</h2>
+          <h4 className="experiences-lede">{t("experiences.lede")}</h4>
         </header>
 
-        {loading && <p className="experiences-status">Chargement des expériences...</p>}
+        {loading && <p className="experiences-status">{t("experiences.loading")}</p>}
 
         {error && !loading && (
           <p className="experiences-error" role="alert">{error}</p>
         )}
 
         {!loading && !error && experiences.length === 0 && (
-          <p className="experiences-empty">Aucune expérience pour le moment.</p>
+          <p className="experiences-empty">{t("experiences.empty")}</p>
         )}
 
         {!loading && !error && experiences.length > 0 && (
@@ -100,20 +106,30 @@ export default function Experiences() {
                 <SwiperSlide key={exp.id ?? idx} className="experience-slide">
                   <article className="experience-card">
                     <div className="experience-top">
-                      <div className="experience-badge">{renderPeriod(exp.startDate, exp.endDate)}</div>
+                      <div className="experience-badge">{renderPeriod(exp.startDate, exp.endDate, t("experiences.periodFallback"), lang)}</div>
                       <h4 className="experience-title">{exp.intitule}</h4>
+                      {exp.entreprise && <p className="experience-company">{exp.entreprise}</p>}
                     </div>
-                    <p className="experience-body">{exp.description}</p>
+                    {exp.missions.length > 0 && (
+                      <div className="experience-missions">
+                        <p className="experience-label">{t("experiences.missionsLabel")}</p>
+                        <ul className="experience-list">
+                          {exp.missions.map((mission, missionIdx) => (
+                            <li key={missionIdx}>{mission}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </article>
                 </SwiperSlide>
               ))}
             </Swiper>
             <div className="experiences-arrows">
               <button type="button" className="experience-cta" onClick={handlePrev} disabled={!swiperRef}>
-                ← Précédent
+                {t("experiences.previous")}
               </button>
               <button type="button" className="experience-cta" onClick={handleNext} disabled={!swiperRef}>
-                Suivant →
+                {t("experiences.next")}
               </button>
             </div>
           </div>
@@ -123,15 +139,15 @@ export default function Experiences() {
   );
 }
 
-function formatDate(d: string | Date | null) {
+function formatDate(d: string | Date | null, locale: string) {
   if (!d) return "";
   const dateObj = typeof d === "string" ? new Date(d) : d;
   if (Number.isNaN(dateObj.getTime())) return "";
-  return new Intl.DateTimeFormat("fr-FR", { month: "short", year: "numeric" }).format(dateObj);
+  return new Intl.DateTimeFormat(locale === "en" ? "en-US" : "fr-FR", { month: "short", year: "numeric" }).format(dateObj);
 }
 
-function renderPeriod(start: string | Date | null, end: string | Date | null) {
-  const startText = formatDate(start);
-  const endText = formatDate(end);
-  return startText && endText ? `${startText} — ${endText}` : startText || endText || "Période";
+function renderPeriod(start: string | Date | null, end: string | Date | null, fallback: string, locale: string) {
+  const startText = formatDate(start, locale);
+  const endText = formatDate(end, locale);
+  return startText && endText ? `${startText} — ${endText}` : startText || endText || fallback;
 }

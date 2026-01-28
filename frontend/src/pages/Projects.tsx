@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getSchoolProjects, getPersonalProjects } from "../services/api";
 import "./projects.css";
+import { useI18n } from "../i18n";
 
 interface Project {
   id: number;
@@ -17,6 +18,7 @@ export default function ProjectList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const { t } = useI18n();
 
   // Prevent background scroll when a modal is open
   useEffect(() => {
@@ -46,7 +48,7 @@ export default function ProjectList() {
       } catch (e) {
         console.error(e);
         if (!mounted) return;
-        setError("Impossible de récupérer les projets.");
+        setError(t("projects.error"));
       } finally {
         if (mounted) setLoading(false);
       }
@@ -61,14 +63,12 @@ export default function ProjectList() {
     <section id="projects" className="projects">
       <div className="projects-inner">
         <header className="projects-header">
-          <p className="projects-kicker">Selection</p>
-          <h2 className="projects-title">Projets et realisations</h2>
-          <h4 className="projects-lede">
-            Une selection recente de projets menees en contexte universitaire et personnel.
-          </h4>
+          <p className="projects-kicker">{t("projects.kicker")}</p>
+          <h2 className="projects-title">{t("projects.title")}</h2>
+          <h4 className="projects-lede">{t("projects.lede")}</h4>
         </header>
 
-        {loading && <p className="projects-status">Chargement des projets...</p>}
+        {loading && <p className="projects-status">{t("projects.loading")}</p>}
 
         {error && (
           <div className="projects-error" role="alert">
@@ -79,15 +79,15 @@ export default function ProjectList() {
         {!loading && !error && (
           <div className="projects-groups">
             <ProjectsGroup
-              title="Projets universitaires"
+              title={t("projects.universityGroup")}
               projects={schoolProjects}
-              emptyLabel="Aucun projet universitaire pour le moment."
+              emptyLabel={t("projects.emptyUniversity")}
               onSelect={setSelectedProject}
             />
             <ProjectsGroup
-              title="Projets personnels"
+              title={t("projects.personalGroup")}
               projects={personalProjects}
-              emptyLabel="Aucun projet personnel pour le moment."
+              emptyLabel={t("projects.emptyPersonal")}
               onSelect={setSelectedProject}
             />
           </div>
@@ -113,12 +113,13 @@ function ProjectsGroup({
   onSelect: (p: Project) => void;
 }) {
   const hasProjects = projects.length > 0;
+  const { t } = useI18n();
 
   return (
     <div className="projects-group">
       <div className="projects-group-head">
         <h3>{title}</h3>
-        <span className="projects-count">{projects.length} projet(s)</span>
+        <span className="projects-count">{projects.length} {t("projects.countLabel")}</span>
       </div>
 
       {!hasProjects && <p className="projects-empty">{emptyLabel}</p>}
@@ -139,7 +140,7 @@ function ProjectsGroup({
               }}
             >
               <div className="project-top">
-                <div className="project-badge">{project.personal ? "Personnel" : "Universitaire"}</div>
+                <div className="project-badge">{project.personal ? t("projects.badgePersonal") : t("projects.badgeSchool")}</div>
                 <h4 className="project-title">{project.title}</h4>
                 <p className="project-desc">{project.description}</p>
               </div>
@@ -152,11 +153,11 @@ function ProjectsGroup({
                     rel="noreferrer"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    Voir sur GitHub
+                    {t("projects.viewGithub")}
                   </a>
                 )}
                 <button className="project-cta" type="button">
-                  Details
+                  {t("projects.details")}
                 </button>
               </div>
             </article>
@@ -168,6 +169,7 @@ function ProjectsGroup({
 }
 
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  const { t } = useI18n();
   const hasTechnologies = Array.isArray(project.technologies) && project.technologies.length > 0;
 
   return (
@@ -186,7 +188,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
 
         <div className="projects-modal-head">
           <div className="projects-modal-title-wrap">
-            <p className="projects-modal-kicker">Projet</p>
+            <p className="projects-modal-kicker">{t("projects.modal.kicker")}</p>
             <h3 id="project-modal-title">{project.title}</h3>
           </div>
         </div>
@@ -195,7 +197,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
 
         {hasTechnologies && (
           <div className="projects-modal-tech">
-            <h4>Stack utilisee</h4>
+            <h4>{t("projects.modal.stack")}</h4>
             <div className="projects-pill-row">
               {project.technologies.map((tech, index) => (
                 <span key={index} className="projects-pill">
@@ -209,11 +211,11 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         <div className="projects-modal-actions">
           {project.githubUrl && (
             <a className="project-cta project-cta--solid" href={project.githubUrl} target="_blank" rel="noreferrer">
-              Voir sur GitHub
+              {t("projects.viewGithub")}
             </a>
           )}
           <button className="project-cta" type="button" onClick={onClose}>
-            Fermer
+            {t("projects.modal.close")}
           </button>
         </div>
       </div>

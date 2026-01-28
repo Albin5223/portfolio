@@ -76,6 +76,7 @@
 .experience-top {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.35rem;
 }
 
@@ -97,6 +98,13 @@
   font-size: 1.1rem;
 }
 
+.experience-company {
+  margin: 0;
+  color: rgba(232, 237, 255, 0.85);
+  font-weight: 650;
+  text-align: center;
+}
+
 .experience-desc {
   margin: 0;
   color: rgba(232, 237, 255, 0.75);
@@ -107,6 +115,36 @@
   color: rgba(232, 237, 255, 0.8);
   line-height: 1.6;
   flex: 1 1 auto;
+}
+
+.experience-missions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  text-align: left;
+  align-items: flex-start;
+  padding-left: 0.5rem;
+}
+
+.experience-list {
+  margin: 0 0 0 2.5rem;
+  padding: 0;
+  color: rgba(232, 237, 255, 0.8);
+  line-height: 1.5;
+  text-align: left;
+}
+
+.experience-list li {
+  margin: 0.15rem 0;
+}
+
+.experience-label {
+  margin: 0;
+  color: rgba(232, 237, 255, 0.7);
+  font-weight: 650;
+  text-align: left;
+  align-self: flex-start;
 }
 
 .experiences-status,
