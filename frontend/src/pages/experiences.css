@@ -51,10 +51,22 @@
   overflow: visible;
 }
 
+.experiences-swiper .swiper-wrapper {
+  align-items: stretch;
+}
+
+.experiences-swiper .swiper-slide {
+  height: auto !important;
+  display: flex;
+  align-items: stretch;
+}
+
 .experience-slide {
   width: min(520px, 88vw);
   display: flex;
   justify-content: center;
+  align-items: stretch;
+  height: auto;
 }
 
 .experience-card {
@@ -71,6 +83,8 @@
   transform-origin: center;
   will-change: transform, opacity;
   min-height: 200px;
+  height: 100%;
+  flex: 1 1 auto;
 }
 
 .experience-top {

@@ -156,7 +156,7 @@ function formatDate(d: string | Date, locale: string) {
   if (!d) return "";
   const dateObj = typeof d === "string" ? new Date(d) : d;
   if (Number.isNaN(dateObj.getTime())) return String(d);
-  return new Intl.DateTimeFormat(locale === "en" ? "en-US" : "fr-FR", { day: "2-digit", month: "long", year: "numeric" }).format(dateObj);
+  return new Intl.DateTimeFormat(locale === "en" ? "en-US" : "fr-FR", {month: "long", year: "numeric" }).format(dateObj);
 }
 
 function selectIcon(typeFormation: string) {

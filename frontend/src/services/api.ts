@@ -29,6 +29,8 @@ const mapProject = (p: any, locale: string) => {
 		title: p.titre ?? tr.title ?? "",
 		description: tr.description ?? "",
 		githubUrl: p.github_link ?? p.githubUrl ?? "",
+		iconUrl: p.iconUrl ?? p.icon_url ?? "base-icon.png",
+		imagesUrl: p.imagesUrl ?? p.images_url ?? "",
 		personal: Boolean(p.is_personal ?? p.personal),
 		technologies: p.technologies ?? [],
 	};

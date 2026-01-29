@@ -55,7 +55,6 @@ export default function Header() {
     <header className={`site-header ${hidden ? "site-header--hidden" : ""}`}>
       <div className="site-header-inner">
         <a className="brand" href="#home">
-          <span className="brand-mark">PA</span>
           <span className="brand-text">
             <span className="brand-name">Paris Albin</span>
             <span className="brand-role">{t("header.brandRole")}</span>

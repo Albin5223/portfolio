@@ -42,6 +42,8 @@ export const translations = {
       badgeSchool: "Universitaire",
       viewGithub: "Voir sur GitHub",
       details: "Détails",
+      next: "Suivant →",
+      previous: "← Précédent",
       modal: {
         kicker: "Projet",
         stack: "Stack utilisée",
@@ -73,7 +75,7 @@ export const translations = {
       title: "Restons en contact",
       lede:
         "Une opportunité, un projet ou simplement l'envie d'échanger ? Je suis disponible pour discuter de vos besoins et réfléchir ensemble à la meilleure façon d'y répondre.",
-      cvSoon: "CV bientôt disponible",
+      downloadCv: "Télécharger mon CV",
       emailCta: "Écrire un email",
       loading: "Chargement des contacts...",
       error: "Impossible de récupérer les contacts.",
@@ -128,6 +130,8 @@ export const translations = {
       badgeSchool: "University",
       viewGithub: "View on GitHub",
       details: "Details",
+      next: "Next →",
+      previous: "← Previous",
       modal: {
         kicker: "Project",
         stack: "Tech stack",
@@ -159,7 +163,7 @@ export const translations = {
       title: "Stay in touch",
       lede:
         "Got an opportunity or just want to chat? I'm available to discuss your needs and figure out the best way to help.",
-      cvSoon: "CV available soon",
+      downloadCv: "Download my resume",
       emailCta: "Send an email",
       loading: "Loading contacts...",
       error: "Unable to fetch contacts.",
