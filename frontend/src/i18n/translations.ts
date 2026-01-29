@@ -176,10 +176,23 @@ export const translations = {
 export type Locale = keyof typeof translations;
 export type TranslationTree = typeof translations.fr;
 
-export type NestedKeys<T> = T extends object
-  ? { [K in keyof T]: K extends string ? `${K}${DotPrefix<NestedKeys<T[K]>>}` : never }[keyof T]
-  : "";
+type Join<A extends string, B extends string> = `${A}.${B}`;
 
-type DotPrefix<T extends string> = T extends "" ? "" : `.${T}`;
+type L1 = keyof TranslationTree & string;
 
-export type TranslationKey = NestedKeys<TranslationTree>;
+type L2<K extends L1> = TranslationTree[K] extends object ? keyof TranslationTree[K] & string : never;
+
+type L3<K extends L1, K2 extends L2<K>> = TranslationTree[K] extends Record<K2, unknown>
+  ? TranslationTree[K][K2] extends object
+    ? keyof TranslationTree[K][K2] & string
+    : never
+  : never;
+
+export type TranslationKey =
+  | L1
+  | { [K in L1]: L2<K> extends string ? Join<K, L2<K>> : never }[L1]
+  | {
+      [K in L1]: L2<K> extends string
+        ? { [K2 in L2<K>]: L3<K, K2> extends string ? Join<Join<K, K2>, L3<K, K2>> : never }[L2<K>]
+        : never;
+    }[L1];
