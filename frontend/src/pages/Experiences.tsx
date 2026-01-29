@@ -9,7 +9,7 @@ import "swiper/css/pagination";
 import { getExperiences } from "../services/api";
 import { useI18n } from "../i18n";
 
-type Experience = {
+export type Experience = {
   id: number;
   startDate: string | Date | null;
   endDate: string | Date | null;
@@ -30,7 +30,7 @@ export default function Experiences() {
       try {
         setLoading(true);
         setError(null);
-        const data = await getExperiences();
+        const data = await getExperiences(lang);
         if (!Array.isArray(data) || data.length === 0) {
           setItems([]);
           return;
@@ -63,7 +63,7 @@ export default function Experiences() {
     };
 
     fetchData();
-  }, []);
+  }, [lang]);
 
   const experiences = items.length > 0 ? items : [];
 

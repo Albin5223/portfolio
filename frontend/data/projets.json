@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "tags": ["Full-stack", "Web", "Map"],
+    "technologies": ["Java", "Spring Boot", "React", "TypeScript", "Leaflet", "OpenWeatherMap API"],
+    "github_link": "https://github.com/Albin5223/weatherMap",
+    "titre": "Weather Map Java React",
+    "is_personal": false,
+    "translations": {
+      "fr": {
+        "description": "Application web full-stack affichant une carte météo interactive. Backend en Java Spring Boot consommant l'API OpenWeatherMap, frontend en React avec Leaflet pour la carte."
+      },
+      "en": {
+        "description": "Full-stack web application featuring an interactive weather map. Java Spring Boot backend consuming the OpenWeatherMap API, React frontend using Leaflet for mapping."
+      }
+    }
+  },
+  {
+    "id": 2,
+    "tags": ["AI", "Computer Vision", "Python"],
+    "technologies": ["Python", "OpenCV", "Mediapipe"],
+    "github_link": "https://github.com/Albin5223/virtual-painter",
+    "titre": "Virtual Painter",
+    "is_personal": true,
+    "translations": {
+      "fr": {
+        "description": "Application web de peinture virtuelle utilisant la détection de mouvements via la webcam. Développée en Python avec OpenCV et Mediapipe."
+      },
+      "en": {
+        "description": "Virtual painting web application using motion detection via webcam. Developed in Python with OpenCV and Mediapipe."
+      }
+    }
+  }
+]

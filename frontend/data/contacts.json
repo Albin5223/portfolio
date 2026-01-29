@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "label": "Email",
+    "contact_value": "paris.albin23@gmail.com",
+    "href": "mailto:paris.albin23@gmail.com",
+    "translations": {
+      "fr": {
+        "detail": "Réponse sous 24h garantie."
+      },
+      "en": {
+        "detail": "Response within 24h guaranteed."
+      }
+    }
+  },
+  {
+    "id": 2,
+    "label": "LinkedIn",
+    "contact_value": "linkedin.com/in/albin-paris",
+    "href": "https://www.linkedin.com/in/albin-paris-23ab5b234/",
+    "translations": {
+      "fr": {
+        "detail": "Actualités, veille et réseau pro."
+      },
+      "en": {
+        "detail": "News, tech watch, and professional networking."
+      }
+    }
+  },
+  {
+    "id": 3,
+    "label": "GitHub",
+    "contact_value": "github.com/Albin5223",
+    "href": "https://github.com/Albin5223",
+    "translations": {
+      "fr": {
+        "detail": "Projets open source et expérimentations."
+      },
+      "en": {
+        "detail": "Open source projects and experimentation."
+      }
+    }
+  }
+]

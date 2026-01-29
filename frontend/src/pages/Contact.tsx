@@ -4,7 +4,7 @@ import BlockIcon from "@mui/icons-material/Block";
 import { getContact } from "../services/api";
 import { useI18n } from "../i18n";
 
-interface Contact {
+export interface Contact {
   id: number;
   label: string;
   value: string;
@@ -16,7 +16,7 @@ export default function Contact() {
   const [contact, setContact] = useState<Contact[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   
   useEffect(() => {
     let mounted = true;
@@ -24,7 +24,7 @@ export default function Contact() {
       setLoading(true);
       setError(null);
       try {
-        const data = await getContact();
+        const data = await getContact(lang);
         if (!mounted) return;
         setContact(Array.isArray(data) ? data : []);
       } catch (e) {
@@ -39,7 +39,7 @@ export default function Contact() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [lang]);
     
   return (
     <section className="contact">

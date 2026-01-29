@@ -151,6 +151,12 @@
 
 .formation-title {
   margin: 0;
+  font-size: clamp(2rem, 2vw + 1rem, 2.6rem);
+}
+
+
+.formation-card-title {
+  margin: 0;
   font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: 0.04em;

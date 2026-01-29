@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "typeFormation": "Musique",
+    "dateStart": "2019-09-01",
+    "dateEnd": "2021-06-23",
+    "translations": {
+      "fr": {
+        "title": "DEM de guitare",
+        "etablissement": "Conservatoire à rayonnement régional de Metz",
+        "description": "Diplôme d'Études Musicales de guitare obtenu mention très bien à l'unanimité"
+      },
+      "en": {
+        "title": "Guitar DEM",
+        "etablissement": "Metz Regional Conservatory",
+        "description": "Diploma in Music Studies (guitar), highest honors"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "typeFormation": "Musique",
+    "dateStart": "2016-09-01",
+    "dateEnd": "2019-06-23",
+    "translations": {
+      "fr": {
+        "title": "CEM de solfège",
+        "etablissement": "Conservatoire à rayonnement régional de Metz",
+        "description": "Certificat d'Études Musicales de solfège obtenu mention très bien"
+      },
+      "en": {
+        "title": "Music Theory CEM",
+        "etablissement": "Metz Regional Conservatory",
+        "description": "Certificate in Music Theory, highest honors"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "typeFormation": "Scolaire",
+    "dateStart": "2018-09-01",
+    "dateEnd": "2021-06-23",
+    "translations": {
+      "fr": {
+        "title": "Baccalauréat",
+        "etablissement": "Lycée Fabert de Metz",
+        "description": "Baccalauréat obtenu mention bien"
+      },
+      "en": {
+        "title": "High School Diploma",
+        "etablissement": "Fabert High School (Metz)",
+        "description": "High school diploma with honors"
+      }
+    }
+  },
+  {
+    "id": 4,
+    "typeFormation": "Informatique",
+    "dateStart": "2021-09-01",
+    "dateEnd": "2024-06-23",
+    "translations": {
+      "fr": {
+        "title": "Licence Informatique",
+        "etablissement": "Université Paris Cité",
+        "description": "Licence d'informatique obtenue mention très bien."
+      },
+      "en": {
+        "title": "Bachelor's Degree in Computer Science",
+        "etablissement": "Université Paris Cité",
+        "description": "Bachelor's degree in CS, highest honors."
+      }
+    }
+  },
+  {
+    "id": 5,
+    "typeFormation": "Informatique",
+    "dateStart": "2024-09-01",
+    "dateEnd": "2026-06-23",
+    "translations": {
+      "fr": {
+        "title": "Master GENIAL",
+        "etablissement": "Université Paris Cité",
+        "description": "Master en cours"
+      },
+      "en": {
+        "title": "Master's in Software Engineering",
+        "etablissement": "Université Paris Cité",
+        "description": "Master's degree in progress"
+      }
+    }
+  },
+  {
+    "id": 6,
+    "typeFormation": "Informatique",
+    "dateStart": "2026-03-09",
+    "dateEnd": "2026-03-11",
+    "translations": {
+      "fr": {
+        "title": "Certification DevOps Fondation",
+        "etablissement": "Université Banque de France",
+        "description": "Certification à venir"
+      },
+      "en": {
+        "title": "DevOps Foundation Certification",
+        "etablissement": "Banque de France University",
+        "description": "Upcoming certification"
+      }
+    }
+  }
+]

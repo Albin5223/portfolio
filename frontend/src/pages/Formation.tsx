@@ -6,7 +6,7 @@ import { getFormations } from "../services/api";
 import "./formation.css";
 import { useI18n } from "../i18n";
 
-interface Formation {
+export interface Formation {
   id: number;
   title: string;
   dateStart: string | Date;
@@ -31,7 +31,7 @@ export default function Formation() {
         setLoading(true);
         setError(null);
         try {
-          const data = await getFormations();
+          const data = await getFormations(lang);
           if (!mounted) return;
           setFormation(Array.isArray(data) ? data : []);
         } catch (e) {
@@ -46,7 +46,7 @@ export default function Formation() {
       return () => {
         mounted = false;
       };
-    }, []);
+    }, [lang]);
 
   useEffect(() => {
     if (!formation.length) return;
@@ -140,7 +140,7 @@ function FormationCard({
       <div className="formation-card-top">
         <div className="formation-icon-wrap">{selectIcon(formation.typeFormation)}</div>
         <div className="formation-meta">
-          <p className="formation-title">{formation.title}</p>
+          <p className="formation-card-title">{formation.title}</p>
           <p className="formation-dates">
             {formatDate(formation.dateStart, lang)} — {formatDate(formation.dateEnd, lang)}
           </p>

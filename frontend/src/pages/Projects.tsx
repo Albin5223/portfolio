@@ -3,7 +3,7 @@ import { getSchoolProjects, getPersonalProjects } from "../services/api";
 import "./projects.css";
 import { useI18n } from "../i18n";
 
-interface Project {
+export interface Project {
   id: number;
   title: string;
   description: string;
@@ -18,7 +18,7 @@ export default function ProjectList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
 
   // Prevent background scroll when a modal is open
   useEffect(() => {
@@ -40,8 +40,8 @@ export default function ProjectList() {
       setLoading(true);
       setError(null);
       try {
-        const schoolData = await getSchoolProjects();
-        const personalData = await getPersonalProjects();
+        const schoolData = await getSchoolProjects(lang);
+        const personalData = await getPersonalProjects(lang);
         if (!mounted) return;
         setSchoolProjects(Array.isArray(schoolData) ? schoolData : []);
         setPersonalProjects(Array.isArray(personalData) ? personalData : []);
@@ -57,7 +57,7 @@ export default function ProjectList() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [lang]);
 
   return (
     <section id="projects" className="projects">
