@@ -13,23 +13,7 @@ jobs:
       # 1️⃣ Checkout du code
       - name: Checkout code
         uses: actions/checkout@v3
-
-      # 2️⃣ Set up Java pour backend
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: temurin
-          java-version: '21'
-
-      # 3️⃣ Build backend
-      - name: Build backend
-        working-directory: ./backend
-        run: mvn clean package -DskipTests
-
-    # 3️⃣bis Renommer le JAR pour systemd
-      - name: Rename backend jar to app.jar
-        working-directory: ./backend/target
-        run: mv backend-0.0.1-SNAPSHOT.jar app.jar
+      
 
       # 4️⃣ Set up Node.js pour frontend
       - name: Set up Node.js
@@ -47,10 +31,6 @@ jobs:
         working-directory: ./frontend
         run: npm run build
         
-        # Vérification optionnelle du dossier target du backend
-      - name: Check backend target
-        working-directory: ./backend
-        run: ls -la target
 
         # Vérification optionnelle du dossier dist du frontend
       - name: Check frontend build
@@ -71,14 +51,3 @@ jobs:
           port: 22
           source: "backend/target/app.jar, frontend/dist/"
           target: /var/www/portfolio/
-
-      # 8️⃣ Redémarrer le backend via systemd
-      - name: Restart backend
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            sudo systemctl restart portfolio-backend
-            sudo systemctl status portfolio-backend
