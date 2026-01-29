@@ -31,7 +31,6 @@ jobs:
         working-directory: ./frontend
         run: npm run build
         
-
         # Vérification optionnelle du dossier dist du frontend
       - name: Check frontend build
         working-directory: ./frontend
@@ -39,7 +38,7 @@ jobs:
             
         # Vérification optionnelle des fichiers à déployer
       - name: Check files to deploy
-        run: ls -la backend/target frontend/dist
+        run: ls -la frontend/dist
 
       # 7️⃣ Copier backend et frontend sur le VPS
       - name: Deploy to VPS
@@ -49,5 +48,5 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
-          source: "backend/target/app.jar, frontend/dist/"
+          source: "frontend/dist/"
           target: /var/www/portfolio/
