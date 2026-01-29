@@ -2,8 +2,9 @@ import "./contact.css";
 import { useEffect, useState } from "react";
 import BlockIcon from "@mui/icons-material/Block";
 import { getContact } from "../services/api";
+import { useI18n } from "../i18n";
 
-interface Contact {
+export interface Contact {
   id: number;
   label: string;
   value: string;
@@ -15,6 +16,7 @@ export default function Contact() {
   const [contact, setContact] = useState<Contact[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { t, lang } = useI18n();
   
   useEffect(() => {
     let mounted = true;
@@ -22,13 +24,13 @@ export default function Contact() {
       setLoading(true);
       setError(null);
       try {
-        const data = await getContact();
+        const data = await getContact(lang);
         if (!mounted) return;
         setContact(Array.isArray(data) ? data : []);
       } catch (e) {
         console.error(e);
         if (!mounted) return;
-        setError("Impossible de récupérer les contacts.");
+        setError(t("contact.error"));
       } finally {
         if (mounted) setLoading(false);
       }
@@ -37,18 +39,15 @@ export default function Contact() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [lang]);
     
   return (
     <section className="contact">
       <div className="contact-inner">
         <header className="contact-header">
-          <p className="contact-kicker">Contact</p>
-          <h1 className="contact-title">Restons en contact</h1>
-          <p className="contact-lede">
-            Une opportunité, un projet ou simplement l'envie d'échanger ? Je suis disponible
-            pour discuter de vos besoins et réfléchir ensemble à la meilleure façon d'y répondre.
-          </p>
+          <p className="contact-kicker">{t("contact.kicker")}</p>
+          <h1 className="contact-title">{t("contact.title")}</h1>
+          <p className="contact-lede">{t("contact.lede")}</p>
         </header>
 
         <div className="contact-actions">
@@ -57,20 +56,20 @@ export default function Contact() {
             className="contact-btn primary is-disabled"
             disabled
             aria-disabled="true"
-            title="CV bientôt disponible"
+            title={t("contact.cvSoon")}
           >
             <BlockIcon fontSize="small" aria-hidden />
-            CV bientôt disponible
+            {t("contact.cvSoon")}
           </button>
           <a className="contact-btn ghost" href="mailto:paris.albin23@gmail.com">
-            Écrire un email
+            {t("contact.emailCta")}
           </a>
         </div>
 
         <div className="contact-grid">
           {loading && (
             <p className="contact-state" role="status">
-              Chargement des contacts...
+              {t("contact.loading")}
             </p>
           )}
 
@@ -82,7 +81,7 @@ export default function Contact() {
 
           {!loading && !error && contact.length === 0 && (
             <p className="contact-state" role="status">
-              Aucun contact disponible pour le moment.
+              {t("contact.empty")}
             </p>
           )}
 
@@ -102,10 +101,8 @@ export default function Contact() {
         </div>
 
         <div className="contact-note">
-          <p className="contact-note-title">Disponibilité</p>
-          <p className="contact-note-body">
-            Basé à Paris, mobile en Île-de-France et ouvert au télétravail. Réponse assurée sous 24h.
-          </p>
+          <p className="contact-note-title">{t("contact.noteTitle")}</p>
+          <p className="contact-note-body">{t("contact.noteBody")}</p>
         </div>
       </div>
     </section>

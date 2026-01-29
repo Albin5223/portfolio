@@ -102,6 +102,29 @@
   background: rgba(255, 255, 255, 0.04);
 }
 
+.site-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.language-toggle {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e8edff;
+  padding: 0.45rem 0.7rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  min-width: 56px;
+  transition: transform 150ms ease, background 150ms ease, border-color 150ms ease, opacity 150ms ease;
+}
+
+.language-toggle:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(94, 210, 255, 0.5); }
+.language-toggle:active { transform: translateY(1px); }
+.language-toggle:focus-visible { outline: 2px solid #5ed2ff; outline-offset: 3px; }
+
 .app-main {
   padding-top: 0.5rem;
   scroll-padding-top: var(--site-header-height, 72px);

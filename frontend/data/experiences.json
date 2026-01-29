@@ -1,0 +1,147 @@
+[
+  {
+    "id": 1,
+    "startDate": "2022-07-01",
+    "endDate": "2023-02-13",
+    "translations": {
+      "fr": {
+        "entreprise": "Geninc",
+        "intitule": "Vendeur à domicile",
+        "missions": [
+          "Ambassadeur de marque pour la Croix Rouge Francaise",
+          "Sensibilisation du grand public aux actions humanitaires",
+          "Collecte de fonds et dons",
+          "Promotion des campagnes de la Croix Rouge lors d'événements publics",
+          "Gestion d'une équipe de bénévoles lors des collectes"
+        ]
+      },
+      "en": {
+        "entreprise": "Geninc",
+        "intitule": "Door-to-door sales",
+        "missions": [
+          "Brand ambassador for the French Red Cross",
+          "Raising public awareness of humanitarian actions",
+          "Fundraising and donations",
+          "Promotion of Red Cross campaigns at public events",
+          "Managing a team of volunteers during fundraising"
+        ]
+      }
+    }
+  },
+  {
+    "id": 2,
+    "startDate": "2023-07-15",
+    "endDate": "2023-08-31",
+    "translations": {
+      "fr": {
+        "entreprise": "Bibliothèque Nationale de France",
+        "intitule": "Magasinier",
+        "missions": [
+          "Accueil et orientation des lecteurs",
+          "Gestion des prêts et retours de documents",
+          "Organisation et rangement des collections",
+          "Assistance aux utilisateurs dans la recherche de documents"
+        ]
+      },
+      "en": {
+        "entreprise": "National Library of France",
+        "intitule": "Library Assistant / Stock Clerk",
+        "missions": [
+          "Greeting and guiding readers",
+          "Managing document loans and returns",
+          "Organizing and shelving collections",
+          "Assisting users with document searches"
+        ]
+      }
+    }
+  },
+  {
+    "id": 3,
+    "startDate": "2024-07-01",
+    "endDate": "2024-08-30",
+    "translations": {
+      "fr": {
+        "entreprise": "ACCOR Hotels Novotel",
+        "intitule": "Serveur",
+        "missions": [
+          "Prise de commandes et service des plats et boissons",
+          "Préparation des tables et mise en place de la salle",
+          "Gestion du bar",
+          "Gestion des paiements et encaissements",
+          "Collaboration avec l'équipe de cuisine pour assurer un service fluide"
+        ]
+      },
+      "en": {
+        "entreprise": "ACCOR Hotels Novotel",
+        "intitule": "Waiter",
+        "missions": [
+          "Taking orders and serving food and drinks",
+          "Table setting and dining room preparation",
+          "Bar management",
+          "Processing payments and cash handling",
+          "Collaborating with the kitchen team for smooth service"
+        ]
+      }
+    }
+  },
+  {
+    "id": 4,
+    "startDate": "2024-09-01",
+    "endDate": "2026-09-04",
+    "translations": {
+      "fr": {
+        "entreprise": "Banque de France",
+        "intitule": "Alternant Assistant chef de projet",
+        "missions": [
+          "Gestion des certificats SSL pour les applications",
+          "Qualification des livrables fournis par le CDS",
+          "Suivi des indicateurs de performance du projets",
+          "Support à la MOA lors des phases de tests fonctionnels",
+          "Suivi des audits de sécurité réalisés sur les applications",
+          "Implémentation de solutions ELK de monitoring pour les différents environnements"
+        ]
+      },
+      "en": {
+        "entreprise": "Banque de France",
+        "intitule": "Apprentice Assistant Project Manager",
+        "missions": [
+          "SSL certificate management for applications",
+          "Qualification of releases provided by the Service Center",
+          "Monitoring project performance indicators (KPIs)",
+          "Support for Business Analysts (MOA) during functional testing",
+          "Monitoring security audits performed on applications",
+          "Implementing monitoring solutions for various environments"
+        ]
+      }
+    }
+  },
+  {
+    "id": 5,
+    "startDate": "2018-09-01",
+    "endDate": "2024-09-04",
+    "translations": {
+      "fr": {
+        "entreprise": "En freelance",
+        "intitule": "Professeur particulier de guitare",
+        "missions": [
+          "Cours individuels adaptés au niveau et aux objectifs de chaque élève",
+          "Préparation aux examens et concours de musique",
+          "Sensibilisation au solfège",
+          "Encadrement de petits groupes pour des ateliers musicaux",
+          "Encouragement à la pratique régulière et à l'expression artistique"
+        ]
+      },
+      "en": {
+        "entreprise": "Freelance",
+        "intitule": "Private Guitar Teacher",
+        "missions": [
+          "Individual lessons tailored to each student's level and goals",
+          "Preparation for music exams and competitions",
+          "Introduction to music theory",
+          "Leading small groups for musical workshops",
+          "Encouraging regular practice and artistic expression"
+        ]
+      }
+    }
+  }
+]
