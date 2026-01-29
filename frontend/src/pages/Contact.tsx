@@ -1,6 +1,6 @@
 import "./contact.css";
 import { useEffect, useState } from "react";
-import BlockIcon from "@mui/icons-material/Block";
+import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import { getContact } from "../services/api";
 import { useI18n } from "../i18n";
 
@@ -51,16 +51,15 @@ export default function Contact() {
         </header>
 
         <div className="contact-actions">
-          <button
-            type="button"
-            className="contact-btn primary is-disabled"
-            disabled
-            aria-disabled="true"
-            title={t("contact.cvSoon")}
+          <a
+            className="contact-btn primary"
+            href="/CV_Albin_Paris.pdf"
+            download="CV_Albin_Paris.pdf"
+            title={t("contact.downloadCv")}
           >
-            <BlockIcon fontSize="small" aria-hidden />
-            {t("contact.cvSoon")}
-          </button>
+            <DownloadRoundedIcon fontSize="small" aria-hidden />
+            {t("contact.downloadCv")}
+          </a>
           <a className="contact-btn ghost" href="mailto:paris.albin23@gmail.com">
             {t("contact.emailCta")}
           </a>

@@ -30,5 +30,23 @@
         "description": "Virtual painting web application using motion detection via webcam. Developed in Python with OpenCV and Mediapipe."
       }
     }
+  },
+  {
+    "id": 3,
+    "tags": ["Java","Transport"],
+    "technologies": ["Java", "JavaFX", "Api IDFM", "API OpenStreetMap"],
+    "github_link": "https://github.com/Albin5223/HeliumMapper",
+    "titre": "HeliumMapper",
+    "iconUrl": "helium-mapper-icon.png",
+    "imagesUrl": "HeliumMapper",
+    "is_personal": false,
+    "translations": {
+      "fr": {
+        "description": "Application JavaFX permettant de calculer et visualiser des itinéraires de transport en commun en Île-de-France en utilisant l'API IDFM et OpenStreetMap."
+      },
+      "en": {
+        "description": "JavaFX application for calculating and visualizing public transport routes in Île-de-France using the IDFM and OpenStreetMap APIs."
+      }
+    }
   }
 ]

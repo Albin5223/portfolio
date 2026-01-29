@@ -1,7 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getSchoolProjects, getPersonalProjects } from "../services/api";
 import "./projects.css";
 import { useI18n } from "../i18n";
+
+const projectImages = import.meta.glob("/public/**/*.{png,jpg,jpeg,webp,avif,svg}", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>;
+
+const getProjectImages = (folder: string) => {
+  if (!folder) return [] as string[];
+  const prefix = `/public/${folder}/`;
+  return Object.entries(projectImages)
+    .filter(([path]) => path.startsWith(prefix))
+    .map(([, url]) => url);
+};
 
 export interface Project {
   id: number;
@@ -9,6 +22,8 @@ export interface Project {
   description: string;
   githubUrl: string;
   personal: boolean;
+  iconUrl: string; //Icon du projet
+  imagesUrl: string; // Repertoire qui contient les images du projet
   technologies: string[];
 }
 
@@ -140,9 +155,19 @@ function ProjectsGroup({
               }}
             >
               <div className="project-top">
-                <div className="project-badge">{project.personal ? t("projects.badgePersonal") : t("projects.badgeSchool")}</div>
-                <h4 className="project-title">{project.title}</h4>
-                <p className="project-desc">{project.description}</p>
+                <div className="project-head">
+                  <div className="project-badge">{project.personal ? t("projects.badgePersonal") : t("projects.badgeSchool")}</div>
+                  <h4 className="project-title">{project.title}</h4>
+                  <p className="project-desc">{project.description}</p>
+                </div>
+                {project.iconUrl && (
+                  <img
+                    className="project-icon"
+                    src={`/${project.iconUrl}`}
+                    alt={`${project.title} logo`}
+                    loading="lazy"
+                  />
+                )}
               </div>
               <div className="project-actions">
                 {project.githubUrl && (
@@ -170,7 +195,28 @@ function ProjectsGroup({
 
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
   const { t } = useI18n();
+  const [imageIndex, setImageIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const images = useMemo(() => getProjectImages(project.imagesUrl), [project.imagesUrl]);
   const hasTechnologies = Array.isArray(project.technologies) && project.technologies.length > 0;
+
+  useEffect(() => {
+    setImageIndex(0);
+  }, [project.id]);
+
+  const handlePrev = () => {
+    setImageIndex((idx) => (idx - 1 + images.length) % images.length);
+  };
+
+  const handleNext = () => {
+    setImageIndex((idx) => (idx + 1) % images.length);
+  };
+
+  const openLightbox = () => {
+    if (images.length > 0) setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => setLightboxOpen(false);
 
   return (
     <div className="projects-modal-overlay" onClick={onClose}>
@@ -188,12 +234,63 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
 
         <div className="projects-modal-head">
           <div className="projects-modal-title-wrap">
-            <p className="projects-modal-kicker">{t("projects.modal.kicker")}</p>
             <h3 id="project-modal-title">{project.title}</h3>
           </div>
         </div>
 
         <p className="projects-modal-body">{project.description}</p>
+
+        {images.length > 0 && (
+          <div className="projects-gallery">
+            <div className="projects-gallery-frame">
+              <img
+                src={images[imageIndex]}
+                alt={`${project.title} screenshot ${imageIndex + 1}`}
+                loading="lazy"
+                onClick={openLightbox}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") openLightbox();
+                }}
+              />
+              {images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    className="projects-gallery-arrow left"
+                    onClick={handlePrev}
+                    aria-label={t("projects.previous")}
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    className="projects-gallery-arrow right"
+                    onClick={handleNext}
+                    aria-label={t("projects.next")}
+                  >
+                    →
+                  </button>
+                </>
+              )}
+            </div>
+            {images.length > 1 && (
+              <div className="projects-gallery-dots" role="tablist" aria-label={project.title}>
+                {images.map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className={`projects-gallery-dot ${idx === imageIndex ? "is-active" : ""}`}
+                    onClick={() => setImageIndex(idx)}
+                    aria-label={`${t("projects.modal.kicker")} ${idx + 1}`}
+                    aria-current={idx === imageIndex}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         {hasTechnologies && (
           <div className="projects-modal-tech">
@@ -218,6 +315,24 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             {t("projects.modal.close")}
           </button>
         </div>
+        {lightboxOpen && (
+          <div className="projects-lightbox" role="dialog" aria-modal="true" onClick={closeLightbox}>
+            <div className="projects-lightbox-inner" onClick={(e) => e.stopPropagation()}>
+              <img src={images[imageIndex]} alt={`${project.title} full image ${imageIndex + 1}`} />
+              {images.length > 1 && (
+                <>
+                  <button type="button" className="projects-lightbox-arrow left" onClick={handlePrev} aria-label={t("projects.previous")}>
+                    ←
+                  </button>
+                  <button type="button" className="projects-lightbox-arrow right" onClick={handleNext} aria-label={t("projects.next")}>
+                    →
+                  </button>
+                </>
+              )}
+              <button type="button" className="projects-lightbox-close" onClick={closeLightbox} aria-label={t("projects.modal.close")}>×</button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
