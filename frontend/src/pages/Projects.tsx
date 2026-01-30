@@ -1,5 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
-import { getSchoolProjects, getPersonalProjects } from "../services/api";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { Swiper as SwiperInstance } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { getAllProjects } from "../services/api";
 import "./projects.css";
 import { useI18n } from "../i18n";
 
@@ -28,8 +31,7 @@ export interface Project {
 }
 
 export default function ProjectList() {
-  const [personalProjects, setPersonalProjects] = useState<Project[]>([]);
-  const [schoolProjects, setSchoolProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -55,11 +57,9 @@ export default function ProjectList() {
       setLoading(true);
       setError(null);
       try {
-        const schoolData = await getSchoolProjects(lang);
-        const personalData = await getPersonalProjects(lang);
+        const projectData = await getAllProjects(lang);
         if (!mounted) return;
-        setSchoolProjects(Array.isArray(schoolData) ? schoolData : []);
-        setPersonalProjects(Array.isArray(personalData) ? personalData : []);
+        setProjects(Array.isArray(projectData) ? projectData : []);
       } catch (e) {
         console.error(e);
         if (!mounted) return;
@@ -93,18 +93,57 @@ export default function ProjectList() {
 
         {!loading && !error && (
           <div className="projects-groups">
-            <ProjectsGroup
-              title={t("projects.universityGroup")}
-              projects={schoolProjects}
-              emptyLabel={t("projects.emptyUniversity")}
-              onSelect={setSelectedProject}
-            />
-            <ProjectsGroup
-              title={t("projects.personalGroup")}
-              projects={personalProjects}
-              emptyLabel={t("projects.emptyPersonal")}
-              onSelect={setSelectedProject}
-            />
+            {projects.length === 0 && <p className="projects-empty">{t("projects.emptyUniversity")}</p>}
+            {projects.length > 0 && (
+              <div className="projects-grid" aria-live="polite">
+                {projects.map((project) => (
+                  <article
+                    className="project-card"
+                    key={project.id}
+                    onClick={() => setSelectedProject(project)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        setSelectedProject(project);
+                      }
+                    }}
+                  >
+                    <div className="project-top">
+                      <div className="project-head">
+                        <div className="project-badge">{project.personal ? t("projects.badgePersonal") : t("projects.badgeSchool")}</div>
+                        <h4 className="project-title">{project.title}</h4>
+                        <p className="project-desc">{project.description}</p>
+                      </div>
+                      {project.iconUrl && (
+                        <img
+                          className="project-icon"
+                          src={`/${project.iconUrl}`}
+                          alt={`${project.title} logo`}
+                          loading="lazy"
+                        />
+                      )}
+                    </div>
+                    <div className="project-actions">
+                      {project.githubUrl && (
+                        <a
+                          className="project-link"
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {t("projects.viewGithub")}
+                        </a>
+                      )}
+                      <button className="project-cta" type="button">
+                        {t("projects.details")}
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -116,87 +155,13 @@ export default function ProjectList() {
   );
 }
 
-function ProjectsGroup({
-  title,
-  projects,
-  emptyLabel,
-  onSelect,
-}: {
-  title: string;
-  projects: Project[];
-  emptyLabel: string;
-  onSelect: (p: Project) => void;
-}) {
-  const hasProjects = projects.length > 0;
-  const { t } = useI18n();
-
-  return (
-    <div className="projects-group">
-      <div className="projects-group-head">
-        <h3>{title}</h3>
-        <span className="projects-count">{projects.length} {t("projects.countLabel")}</span>
-      </div>
-
-      {!hasProjects && <p className="projects-empty">{emptyLabel}</p>}
-
-      {hasProjects && (
-        <div className="projects-grid" aria-live="polite">
-          {projects.map((project) => (
-            <article
-              className="project-card"
-              key={project.id}
-              onClick={() => onSelect(project)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  onSelect(project);
-                }
-              }}
-            >
-              <div className="project-top">
-                <div className="project-head">
-                  <div className="project-badge">{project.personal ? t("projects.badgePersonal") : t("projects.badgeSchool")}</div>
-                  <h4 className="project-title">{project.title}</h4>
-                  <p className="project-desc">{project.description}</p>
-                </div>
-                {project.iconUrl && (
-                  <img
-                    className="project-icon"
-                    src={`/${project.iconUrl}`}
-                    alt={`${project.title} logo`}
-                    loading="lazy"
-                  />
-                )}
-              </div>
-              <div className="project-actions">
-                {project.githubUrl && (
-                  <a
-                    className="project-link"
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {t("projects.viewGithub")}
-                  </a>
-                )}
-                <button className="project-cta" type="button">
-                  {t("projects.details")}
-                </button>
-              </div>
-            </article>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
   const { t } = useI18n();
   const [imageIndex, setImageIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [gallerySwiper, setGallerySwiper] = useState<SwiperInstance | null>(null);
+  const [lightboxSwiper, setLightboxSwiper] = useState<SwiperInstance | null>(null);
+  const overlayPointerDown = useRef(false);
   const images = useMemo(() => getProjectImages(project.imagesUrl), [project.imagesUrl]);
   const hasTechnologies = Array.isArray(project.technologies) && project.technologies.length > 0;
 
@@ -205,10 +170,26 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
   }, [project.id]);
 
   const handlePrev = () => {
+    if (lightboxOpen && lightboxSwiper) {
+      lightboxSwiper.slidePrev();
+      return;
+    }
+    if (gallerySwiper) {
+      gallerySwiper.slidePrev();
+      return;
+    }
     setImageIndex((idx) => (idx - 1 + images.length) % images.length);
   };
 
   const handleNext = () => {
+    if (lightboxOpen && lightboxSwiper) {
+      lightboxSwiper.slideNext();
+      return;
+    }
+    if (gallerySwiper) {
+      gallerySwiper.slideNext();
+      return;
+    }
     setImageIndex((idx) => (idx + 1) % images.length);
   };
 
@@ -218,8 +199,34 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
 
   const closeLightbox = () => setLightboxOpen(false);
 
+  useEffect(() => {
+    if (gallerySwiper && gallerySwiper.activeIndex !== imageIndex) {
+      gallerySwiper.slideTo(imageIndex);
+    }
+  }, [gallerySwiper, imageIndex]);
+
+  useEffect(() => {
+    if (lightboxOpen && lightboxSwiper && lightboxSwiper.activeIndex !== imageIndex) {
+      lightboxSwiper.slideTo(imageIndex, 0);
+    }
+  }, [lightboxOpen, lightboxSwiper, imageIndex]);
+
+  const handleOverlayMouseDown = (e: React.MouseEvent) => {
+    overlayPointerDown.current = e.target === e.currentTarget;
+  };
+
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    const shouldClose = overlayPointerDown.current && e.target === e.currentTarget;
+    overlayPointerDown.current = false;
+    if (shouldClose) onClose();
+  };
+
   return (
-    <div className="projects-modal-overlay" onClick={onClose}>
+    <div
+      className="projects-modal-overlay"
+      onMouseDown={handleOverlayMouseDown}
+      onClick={handleOverlayClick}
+    >
       <div
         className="projects-modal"
         onClick={(e) => e.stopPropagation()}
@@ -243,17 +250,31 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         {images.length > 0 && (
           <div className="projects-gallery">
             <div className="projects-gallery-frame">
-              <img
-                src={images[imageIndex]}
-                alt={`${project.title} screenshot ${imageIndex + 1}`}
-                loading="lazy"
-                onClick={openLightbox}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") openLightbox();
-                }}
-              />
+              <Swiper
+                className="projects-gallery-swiper"
+                slidesPerView={1}
+                spaceBetween={10}
+                grabCursor
+                initialSlide={imageIndex}
+                onSwiper={setGallerySwiper}
+                onSlideChange={(swiper) => setImageIndex(swiper.activeIndex)}
+              >
+                {images.map((src, idx) => (
+                  <SwiperSlide key={idx}>
+                    <img
+                      src={src}
+                      alt={`${project.title} screenshot ${idx + 1}`}
+                      loading="lazy"
+                      onClick={openLightbox}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") openLightbox();
+                      }}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
               {images.length > 1 && (
                 <>
                   <button
@@ -262,7 +283,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                     onClick={handlePrev}
                     aria-label={t("projects.previous")}
                   >
-                    ←
+                    <span className="projects-arrow-icon" aria-hidden="true" />
                   </button>
                   <button
                     type="button"
@@ -270,7 +291,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                     onClick={handleNext}
                     aria-label={t("projects.next")}
                   >
-                    →
+                    <span className="projects-arrow-icon" aria-hidden="true" />
                   </button>
                 </>
               )}
@@ -282,7 +303,11 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                     key={idx}
                     type="button"
                     className={`projects-gallery-dot ${idx === imageIndex ? "is-active" : ""}`}
-                    onClick={() => setImageIndex(idx)}
+                    onClick={() => {
+                      setImageIndex(idx);
+                      gallerySwiper?.slideTo(idx);
+                      lightboxSwiper?.slideTo(idx);
+                    }}
                     aria-label={`${t("projects.modal.kicker")} ${idx + 1}`}
                     aria-current={idx === imageIndex}
                   />
@@ -317,15 +342,32 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         </div>
         {lightboxOpen && (
           <div className="projects-lightbox" role="dialog" aria-modal="true" onClick={closeLightbox}>
-            <div className="projects-lightbox-inner" onClick={(e) => e.stopPropagation()}>
-              <img src={images[imageIndex]} alt={`${project.title} full image ${imageIndex + 1}`} />
+            <div
+              className="projects-lightbox-inner"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Swiper
+                className="projects-lightbox-swiper"
+                slidesPerView={1}
+                spaceBetween={12}
+                grabCursor
+                initialSlide={imageIndex}
+                onSwiper={setLightboxSwiper}
+                onSlideChange={(swiper) => setImageIndex(swiper.activeIndex)}
+              >
+                {images.map((src, idx) => (
+                  <SwiperSlide key={idx}>
+                    <img src={src} alt={`${project.title} full image ${idx + 1}`} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
               {images.length > 1 && (
                 <>
                   <button type="button" className="projects-lightbox-arrow left" onClick={handlePrev} aria-label={t("projects.previous")}>
-                    ←
+                    <span className="projects-arrow-icon" aria-hidden="true" />
                   </button>
                   <button type="button" className="projects-lightbox-arrow right" onClick={handleNext} aria-label={t("projects.next")}>
-                    →
+                    <span className="projects-arrow-icon" aria-hidden="true" />
                   </button>
                 </>
               )}

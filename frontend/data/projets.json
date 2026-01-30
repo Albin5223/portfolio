@@ -2,9 +2,11 @@
   {
     "id": 1,
     "tags": ["Full-stack", "Web", "Map"],
-    "technologies": ["Java", "Spring Boot", "React", "TypeScript", "Leaflet", "OpenWeatherMap API"],
+    "technologies": ["Java", "Spring Boot", "React", "TypeScript", "Leaflet", "OpenWeatherMap API","Docker"],
     "github_link": "https://github.com/Albin5223/weatherMap",
     "titre": "Weather Map Java React",
+    "iconUrl": "weather-map-icon.ico",
+    "imagesUrl": "WeatherMap",
     "is_personal": false,
     "translations": {
       "fr": {
@@ -46,6 +48,60 @@
       },
       "en": {
         "description": "JavaFX application for calculating and visualizing public transport routes in Île-de-France using the IDFM and OpenStreetMap APIs."
+      }
+    }
+  },
+  {
+    "id": 4,
+    "tags": ["C"],
+    "technologies": ["C", "Makefile", "TCP/UDP","Shell"],
+    "github_link": "https://github.com/Albin5223/PR6-Bomberman",
+    "titre": "Bomberman",
+    "iconUrl": "bomberman-icon.png",
+    "imagesUrl": "Bomberman",
+    "is_personal": false,
+    "translations": {
+      "fr": {
+        "description": "Jeu Bomberman multijoueur développé en C utilisant TCP/UDP pour la communication réseau. Avec un côté serveur et client, ce projet nous a permis de comprendre la communication réseau, la gestion des threads et la synchronisation des données."
+      },
+      "en": {
+        "description": "Multiplayer Bomberman game developed in C using TCP/UDP for network communication. With both server and client sides, this project allowed us to understand network communication, thread management, and data synchronization."
+      }
+    }
+  },
+  {
+    "id": 5,
+    "tags": ["Java"],
+    "technologies": ["Java", "Swing", "Gradle"],
+    "github_link": "https://github.com/Albin5223/poo-slither.io",
+    "titre": "Slither.io",
+    "iconUrl": "slither-io-icon.png",
+    "imagesUrl": "SlitherIO",
+    "is_personal": false,
+    "translations": {
+      "fr": {
+        "description": "Reproduction du celébre jeu Slither.io en Java avec Swing. Ce projet nous a permis de renforcer nos compétences en programmation orientée objet et en gestion des interfaces graphiques. Un mode de jeu snake classique est disponible également, sur la même base de code."
+      },
+      "en": {
+        "description": "Reproduction of the famous Slither.io game in Java with Swing. This project allowed us to strengthen our skills in object-oriented programming and graphical user interface management. A classic snake game mode is also available, based on the same code."
+      }
+    }
+  },
+  {
+    "id": 6,
+    "tags": ["Java"],
+    "technologies": ["Java", "Swing"],
+    "github_link": "https://github.com/Albin5223/kuba-vp2a",
+    "titre": "Kuba",
+    "iconUrl": "kuba-icon.png",
+    "imagesUrl": "KubaVP2A",
+    "is_personal": false,
+    "translations": {
+      "fr": {
+        "description": "Jeu de plateau Kuba développé en Java avec Swing. Ce projet nous a permis de découvrir la programmation orientée objet et la gestion des interfaces graphiques."
+      },
+      "en": {
+        "description": "Kuba board game developed in Java with Swing. This project allowed us to discover object-oriented programming and graphical user interface management."
       }
     }
   }
