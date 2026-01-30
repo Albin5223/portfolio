@@ -46,6 +46,11 @@ export const getSchoolProjects = async (lang?: string): Promise<Project[]> => {
 	return projectsJson.map((p: any) => mapProject(p, locale)).filter((p) => !p.personal);
 };
 
+
+export const getAllProjects = async (lang?: string): Promise<Project[]> => {
+	const locale = lang ?? getLocale();
+	return projectsJson.map((p: any) => mapProject(p, locale));
+};
 // ---- Formations ----
 export const getFormations = async (lang?: string): Promise<Formation[]> => {
 	const locale = lang ?? getLocale();
