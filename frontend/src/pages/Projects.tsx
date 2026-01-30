@@ -238,107 +238,108 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         <button className="projects-modal-close" type="button" onClick={onClose} aria-label="Fermer la fiche projet">
           X
         </button>
-
-        <div className="projects-modal-head">
-          <div className="projects-modal-title-wrap">
-            <h3 id="project-modal-title">{project.title}</h3>
+        <div className="projects-modal-content">
+          <div className="projects-modal-head">
+            <div className="projects-modal-title-wrap">
+              <h3 id="project-modal-title">{project.title}</h3>
+            </div>
           </div>
-        </div>
 
-        <p className="projects-modal-body">{project.description}</p>
+          <p className="projects-modal-body">{project.description}</p>
 
-        {images.length > 0 && (
-          <div className="projects-gallery">
-            <div className="projects-gallery-frame">
-              <Swiper
-                className="projects-gallery-swiper"
-                slidesPerView={1}
-                spaceBetween={10}
-                grabCursor
-                initialSlide={imageIndex}
-                onSwiper={setGallerySwiper}
-                onSlideChange={(swiper) => setImageIndex(swiper.activeIndex)}
-              >
-                {images.map((src, idx) => (
-                  <SwiperSlide key={idx}>
-                    <img
-                      src={src}
-                      alt={`${project.title} screenshot ${idx + 1}`}
-                      loading="lazy"
-                      onClick={openLightbox}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") openLightbox();
-                      }}
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+          {images.length > 0 && (
+            <div className="projects-gallery">
+              <div className="projects-gallery-frame">
+                <Swiper
+                  className="projects-gallery-swiper"
+                  slidesPerView={1}
+                  spaceBetween={10}
+                  grabCursor
+                  initialSlide={imageIndex}
+                  onSwiper={setGallerySwiper}
+                  onSlideChange={(swiper) => setImageIndex(swiper.activeIndex)}
+                >
+                  {images.map((src, idx) => (
+                    <SwiperSlide key={idx}>
+                      <img
+                        src={src}
+                        alt={`${project.title} screenshot ${idx + 1}`}
+                        loading="lazy"
+                        onClick={openLightbox}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.key === " ") openLightbox();
+                        }}
+                      />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+                {images.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      className="projects-gallery-arrow left"
+                      onClick={handlePrev}
+                      aria-label={t("projects.previous")}
+                    >
+                      <span className="projects-arrow-icon" aria-hidden="true" />
+                    </button>
+                    <button
+                      type="button"
+                      className="projects-gallery-arrow right"
+                      onClick={handleNext}
+                      aria-label={t("projects.next")}
+                    >
+                      <span className="projects-arrow-icon" aria-hidden="true" />
+                    </button>
+                  </>
+                )}
+              </div>
               {images.length > 1 && (
-                <>
-                  <button
-                    type="button"
-                    className="projects-gallery-arrow left"
-                    onClick={handlePrev}
-                    aria-label={t("projects.previous")}
-                  >
-                    <span className="projects-arrow-icon" aria-hidden="true" />
-                  </button>
-                  <button
-                    type="button"
-                    className="projects-gallery-arrow right"
-                    onClick={handleNext}
-                    aria-label={t("projects.next")}
-                  >
-                    <span className="projects-arrow-icon" aria-hidden="true" />
-                  </button>
-                </>
+                <div className="projects-gallery-dots" role="tablist" aria-label={project.title}>
+                  {images.map((_, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      className={`projects-gallery-dot ${idx === imageIndex ? "is-active" : ""}`}
+                      onClick={() => {
+                        setImageIndex(idx);
+                        gallerySwiper?.slideTo(idx);
+                        lightboxSwiper?.slideTo(idx);
+                      }}
+                      aria-label={`${t("projects.modal.kicker")} ${idx + 1}`}
+                      aria-current={idx === imageIndex}
+                    />
+                  ))}
+                </div>
               )}
             </div>
-            {images.length > 1 && (
-              <div className="projects-gallery-dots" role="tablist" aria-label={project.title}>
-                {images.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    className={`projects-gallery-dot ${idx === imageIndex ? "is-active" : ""}`}
-                    onClick={() => {
-                      setImageIndex(idx);
-                      gallerySwiper?.slideTo(idx);
-                      lightboxSwiper?.slideTo(idx);
-                    }}
-                    aria-label={`${t("projects.modal.kicker")} ${idx + 1}`}
-                    aria-current={idx === imageIndex}
-                  />
+          )}
+
+          {hasTechnologies && (
+            <div className="projects-modal-tech">
+              <h4>{t("projects.modal.stack")}</h4>
+              <div className="projects-pill-row">
+                {project.technologies.map((tech, index) => (
+                  <span key={index} className="projects-pill">
+                    {tech}
+                  </span>
                 ))}
               </div>
-            )}
-          </div>
-        )}
-
-        {hasTechnologies && (
-          <div className="projects-modal-tech">
-            <h4>{t("projects.modal.stack")}</h4>
-            <div className="projects-pill-row">
-              {project.technologies.map((tech, index) => (
-                <span key={index} className="projects-pill">
-                  {tech}
-                </span>
-              ))}
             </div>
-          </div>
-        )}
-
-        <div className="projects-modal-actions">
-          {project.githubUrl && (
-            <a className="project-cta project-cta--solid" href={project.githubUrl} target="_blank" rel="noreferrer">
-              {t("projects.viewGithub")}
-            </a>
           )}
-          <button className="project-cta" type="button" onClick={onClose}>
-            {t("projects.modal.close")}
-          </button>
+
+          <div className="projects-modal-actions">
+            {project.githubUrl && (
+              <a className="project-cta project-cta--solid" href={project.githubUrl} target="_blank" rel="noreferrer">
+                {t("projects.viewGithub")}
+              </a>
+            )}
+            <button className="project-cta" type="button" onClick={onClose}>
+              {t("projects.modal.close")}
+            </button>
+          </div>
         </div>
         {lightboxOpen && (
           <div className="projects-lightbox" role="dialog" aria-modal="true" onClick={closeLightbox}>

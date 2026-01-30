@@ -41,14 +41,14 @@
 
 .experiences-viewport {
   position: relative;
-  overflow: visible;
-  padding: 0 4vw 0;
+  overflow: hidden;
+  padding: 0;
 }
 
 .experiences-swiper {
   width: 100%;
   padding: 1.25rem 0 2rem;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .experiences-swiper .swiper-wrapper {
@@ -62,7 +62,7 @@
 }
 
 .experience-slide {
-  width: min(520px, 88vw);
+  width: min(520px, 100%);
   display: flex;
   justify-content: center;
   align-items: stretch;
@@ -231,4 +231,5 @@
   }
   .experience-card { padding: 1rem; }
   .experiences-arrows { display: none; }
+  .experiences-swiper { padding: 1rem 0 1.5rem; }
 }
