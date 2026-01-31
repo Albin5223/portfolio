@@ -235,9 +235,6 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         aria-labelledby="project-modal-title"
       >
         <div className="projects-modal-accent" aria-hidden />
-        <button className="projects-modal-close" type="button" onClick={onClose} aria-label="Fermer la fiche projet">
-          X
-        </button>
         <div className="projects-modal-content">
           <div className="projects-modal-head">
             <div className="projects-modal-title-wrap">
