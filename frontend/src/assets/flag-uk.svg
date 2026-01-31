@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="24" viewBox="0 0 36 24" role="img" aria-label="Union Jack">
+  <rect width="36" height="24" fill="#012169"/>
+  <path d="M0 0 L14 9 H10 L0 3 Z M36 0 L22 9 H26 L36 3 Z M0 24 L14 15 H10 L0 21 Z M36 24 L22 15 H26 L36 21 Z" fill="#fff"/>
+  <path d="M0 0 L12 8 H8 L0 2 Z M36 0 L24 8 H28 L36 2 Z M0 24 L12 16 H8 L0 22 Z M36 24 L24 16 H28 L36 22 Z" fill="#c8102e"/>
+  <path d="M14.5 0 H21.5 V9 H36 V15 H21.5 V24 H14.5 V15 H0 V9 H14.5 Z" fill="#fff"/>
+  <path d="M16 0 H20 V11 H36 V13 H20 V24 H16 V13 H0 V11 H16 Z" fill="#c8102e"/>
+</svg>

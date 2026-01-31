@@ -11,8 +11,8 @@ export default function Home() {
           <p className="hero-eyebrow">{t("home.eyebrow")}</p>
           <h1 className="hero-title">{t("home.title")}</h1>
           <p className="hero-lede">{t("home.lede")}</p>
-          <p className="hero-body">{t("home.body")}</p>
-
+          <p className="hero-body">{t("home.description")}</p>
+          <p className="hero-body">{t("home.approche")}</p>
 
           <div className="hero-actions">
             <a className="hero-btn primary" href="#projects">

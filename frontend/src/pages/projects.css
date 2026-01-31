@@ -489,6 +489,52 @@
   box-shadow: none;
 }
 
+/* Scrollbar theming */
+.projects,
+.projects-modal-content,
+.projects-lightbox-inner,
+.projects-gallery-frame,
+.projects-lightbox {
+  scrollbar-width: thin;
+  scrollbar-color: #7c8bff rgba(255, 255, 255, 0.08);
+}
+
+.projects::-webkit-scrollbar,
+.projects-modal-content::-webkit-scrollbar,
+.projects-lightbox-inner::-webkit-scrollbar,
+.projects-gallery-frame::-webkit-scrollbar,
+.projects-lightbox::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.projects::-webkit-scrollbar-track,
+.projects-modal-content::-webkit-scrollbar-track,
+.projects-lightbox-inner::-webkit-scrollbar-track,
+.projects-gallery-frame::-webkit-scrollbar-track,
+.projects-lightbox::-webkit-scrollbar-track {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border-radius: 12px;
+}
+
+.projects::-webkit-scrollbar-thumb,
+.projects-modal-content::-webkit-scrollbar-thumb,
+.projects-lightbox-inner::-webkit-scrollbar-thumb,
+.projects-gallery-frame::-webkit-scrollbar-thumb,
+.projects-lightbox::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #7c8bff, #5ed2ff);
+  border-radius: 12px;
+  border: 2px solid rgba(12, 17, 38, 0.6);
+}
+
+.projects::-webkit-scrollbar-thumb:hover,
+.projects-modal-content::-webkit-scrollbar-thumb:hover,
+.projects-lightbox-inner::-webkit-scrollbar-thumb:hover,
+.projects-gallery-frame::-webkit-scrollbar-thumb:hover,
+.projects-lightbox::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #8ea1ff, #6de2ff);
+}
+
 .projects-modal-title-wrap {
   display: flex;
   flex-direction: column;

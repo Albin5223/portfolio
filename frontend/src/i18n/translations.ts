@@ -21,8 +21,8 @@ export const translations = {
       eyebrow: "Qui suis-je ?",
       title: "Paris Albin",
       lede: "Bienvenue sur mon portfolio.",
-      body:
-        "Chef de projet en alternance et étudiant en master de développement informatique, je reste proche du code et des enjeux techniques, de la conception à l'amélioration des applications.",
+      description:"Futur diplômé en Génie Informatique et Chef de projet en alternance.",
+      approche:"Mon approche ? Allier la rigueur du code aux enjeux de gestion pour des projets robustes et performants.",
       ctaProjects: "Voir mes projets",
       ctaContact: "Me contacter",
       imageAlt: "Photo de Paris Albin",
@@ -109,8 +109,8 @@ export const translations = {
       eyebrow: "About me",
       title: "Paris Albin",
       lede: "Welcome to my portfolio.",
-      body:
-        "Apprentice project manager and master's student in software development, I stay close to code and technical challenges from design through continuous improvement.",
+      description: "Future graduate in Computer Engineering and Apprentice Project Manager.",
+      approche: "My approach? Combining the rigor of code with management challenges for robust and high-performing projects.",
       ctaProjects: "View my projects",
       ctaContact: "Contact me",
       imageAlt: "Portrait of Paris Albin",

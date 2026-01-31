@@ -98,7 +98,8 @@
           "Suivi des indicateurs de performance du projets",
           "Support à la MOA lors des phases de tests fonctionnels",
           "Suivi des audits de sécurité réalisés sur les applications",
-          "Implémentation de solutions ELK de monitoring pour les différents environnements"
+          "Implémentation de solutions ELK de monitoring pour les différents environnements",
+          "Animation des réunions de suivi avec les différentes parties prenantes"
         ]
       },
       "en": {
@@ -110,7 +111,8 @@
           "Monitoring project performance indicators (KPIs)",
           "Support for Business Analysts (MOA) during functional testing",
           "Monitoring security audits performed on applications",
-          "Implementing monitoring solutions for various environments"
+          "Implementing monitoring solutions for various environments",
+          "Leading follow-up meetings with different stakeholders"
         ]
       }
     }
