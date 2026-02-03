@@ -4,7 +4,11 @@ import { useI18n } from "../i18n";
 import frFlag from "../assets/flag-fr.svg";
 import ukFlag from "../assets/flag-uk.svg";
 
-export default function Header() {
+type HeaderProps = {
+  forceHidden?: boolean;
+};
+
+export default function Header({ forceHidden = false }: HeaderProps) {
   const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const lastY = useRef(0);
@@ -26,6 +30,7 @@ export default function Header() {
 
     const onScroll = () => {
       if (menuOpenRef.current) return;
+      if (forceHidden) return;
 
       const currentY = window.scrollY || window.pageYOffset || 0;
       const delta = currentY - lastY.current;
@@ -44,7 +49,7 @@ export default function Header() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [forceHidden]);
 
   useEffect(() => {
     menuOpenRef.current = menuOpen;
@@ -67,11 +72,17 @@ export default function Header() {
     return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (forceHidden) setMenuOpen(false);
+  }, [forceHidden]);
+
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => setMenuOpen(false);
 
+  const isHidden = forceHidden || hidden;
+
   return (
-    <header className={`site-header ${hidden ? "site-header--hidden" : ""}`}>
+    <header className={`site-header ${isHidden ? "site-header--hidden" : ""}`}>
       <div className="site-header-inner">
         <a className="brand" href="#home">
           <span className="brand-text">

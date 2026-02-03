@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './App.css'
 import './header.css'
 import Header from './components/Header'
@@ -8,14 +9,21 @@ import Formation from './pages/Formation'
 import Experiences from './pages/Experiences'
 
 function App() {
+  const [projectModalOpen, setProjectModalOpen] = useState(false);
+
   return (
     <div>
-      <Header />
+      <Header forceHidden={projectModalOpen} />
       <div className="site-header-spacer" aria-hidden="true" />
 
       <main className="app-main">
         <section id="home"><Home /></section>
-        <section id="projects"><ProjectList /></section>
+        <section id="projects">
+          <ProjectList
+            onModalOpen={() => setProjectModalOpen(true)}
+            onModalClose={() => setProjectModalOpen(false)}
+          />
+        </section>
         <section id="experiences"><Experiences /></section>
         <section id="formation"><Formation /></section>
         <section id="contact"><Contact /></section>

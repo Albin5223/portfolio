@@ -30,7 +30,12 @@ export interface Project {
   technologies: string[];
 }
 
-export default function ProjectList() {
+type ProjectListProps = {
+  onModalOpen?: () => void;
+  onModalClose?: () => void;
+};
+
+export default function ProjectList({ onModalOpen, onModalClose }: ProjectListProps) {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -73,6 +78,16 @@ export default function ProjectList() {
       mounted = false;
     };
   }, [lang]);
+
+  useEffect(() => {
+    if (selectedProject) {
+      onModalOpen?.();
+      return () => onModalClose?.();
+    }
+
+    onModalClose?.();
+    return undefined;
+  }, [selectedProject, onModalClose, onModalOpen]);
 
   return (
     <section id="projects" className="projects">
