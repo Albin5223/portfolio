@@ -91,7 +91,7 @@
     "translations": {
       "fr": {
         "entreprise": "Banque de France",
-        "intitule": "Alternant Assistant chef de projet",
+        "intitule": "Consultant IT en Alternance",
         "missions": [
           "Gestion des certificats SSL pour les applications",
           "Qualification des livrables fournis par le CDS",
@@ -104,7 +104,7 @@
       },
       "en": {
         "entreprise": "Banque de France",
-        "intitule": "Apprentice Assistant Project Manager",
+        "intitule": "IT Consultant in Work-Study",
         "missions": [
           "SSL certificate management for applications",
           "Qualification of releases provided by the Service Center",
