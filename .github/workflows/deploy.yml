@@ -1,52 +1,29 @@
-name: Deploy Portfolio
+name: Deploy
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: [Docker]
+    types: [completed]
+    branches: [main]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      # 1️⃣ Checkout du code
-      - name: Checkout code
-        uses: actions/checkout@v3
-      
-
-      # 4️⃣ Set up Node.js pour frontend
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
-      # 5️⃣ Installer les dépendances frontend
-      - name: Install frontend deps
-        working-directory: ./frontend
-        run: npm install
-
-      # 6️⃣ Build frontend
-      - name: Build frontend
-        working-directory: ./frontend
-        run: npm run build
-        
-        # Vérification optionnelle du dossier dist du frontend
-      - name: Check frontend build
-        working-directory: ./frontend
-        run: ls -la dist
-            
-        # Vérification optionnelle des fichiers à déployer
-      - name: Check files to deploy
-        run: ls -la frontend/dist
-
-      # 7️⃣ Copier backend et frontend sur le VPS
       - name: Deploy to VPS
-        uses: appleboy/scp-action@v1
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
-          source: "frontend/dist/"
-          target: /var/www/portfolio/
+          script: |
+            docker pull ghcr.io/albin5223/portfolio:latest
+            docker stop portfolio || true
+            docker rm portfolio || true
+            docker run -d \
+              --name portfolio \
+              --restart always \
+              -p 3000:80 \
+              ghcr.io/albin5223/portfolio:latest

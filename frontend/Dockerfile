@@ -1,9 +1,13 @@
-FROM node:20-alpine
+# Stage 1 — Build React
+FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-EXPOSE 5173
+COPY . .
+RUN npm run build
 
-# Monter le code local pour hot reload
-VOLUME /app
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+# Stage 2 — Servir avec Nginx
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
