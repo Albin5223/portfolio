@@ -18,13 +18,13 @@ function App() {
 
       <main className="app-main">
         <section id="home"><Home /></section>
+        <section id="experiences"><Experiences /></section>
         <section id="projects">
           <ProjectList
             onModalOpen={() => setProjectModalOpen(true)}
             onModalClose={() => setProjectModalOpen(false)}
           />
         </section>
-        <section id="experiences"><Experiences /></section>
         <section id="formation"><Formation /></section>
         <section id="contact"><Contact /></section>
       </main>

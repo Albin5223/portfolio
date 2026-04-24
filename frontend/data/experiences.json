@@ -93,26 +93,26 @@
         "entreprise": "Banque de France",
         "intitule": "Consultant IT en Alternance",
         "missions": [
-          "Gestion des certificats SSL pour les applications",
-          "Qualification des livrables fournis par le CDS",
-          "Suivi des indicateurs de performance du projets",
-          "Support à la MOA lors des phases de tests fonctionnels",
+          "Configuration des différents serveurs lors des montées de version Wildfly",
+          "Maintenance de 3 applications critiques au sein d'une équipe MOE",
+          "Validation des correctifs de sécurité appliqués aux applications",
+          "Support à la MOA lors des phases de recettes fonctionnels",
           "Suivi des audits de sécurité réalisés sur les applications",
           "Implémentation de solutions ELK de monitoring pour les différents environnements",
-          "Animation des réunions de suivi avec les différentes parties prenantes"
+          "Animation des différents comités Agile"
         ]
       },
       "en": {
         "entreprise": "Banque de France",
         "intitule": "IT Consultant in Work-Study",
         "missions": [
-          "SSL certificate management for applications",
-          "Qualification of releases provided by the Service Center",
-          "Monitoring project performance indicators (KPIs)",
+          "Server configuration during Wildfly version upgrades",
+          "Maintenance of 3 critical applications within a MOE team",
+          "Validation of security patches applied to applications",
           "Support for Business Analysts (MOA) during functional testing",
           "Monitoring security audits performed on applications",
           "Implementing monitoring solutions for various environments",
-          "Leading follow-up meetings with different stakeholders"
+          "Leading Agile committees"
         ]
       }
     }
