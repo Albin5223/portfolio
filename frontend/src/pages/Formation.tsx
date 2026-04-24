@@ -81,7 +81,6 @@ export default function Formation() {
         <header className="formation-header">
           <p className="formation-kicker">{t("formation.kicker")}</p>
           <h2 className="formation-title">{t("formation.title")}</h2>
-          <p className="formation-lede">{t("formation.lede")}</p>
         </header>
 
         {loading && <p className="formation-status">{t("formation.loading")}</p>}

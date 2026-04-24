@@ -72,6 +72,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+  text-align: center;
   gap: 0.75rem;
   cursor: pointer;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -95,10 +97,13 @@
 
 .project-top {
   display: flex;
+  flex-direction: column;
   gap: 0.75rem;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   flex: 1;
+  width: 100%;
+  position: relative;
 }
 
 .project-head {
@@ -106,6 +111,7 @@
   flex-direction: column;
   gap: 0.35rem;
   flex: 1 1 auto;
+  text-align: center;
 }
 
 .project-badge {
@@ -131,6 +137,7 @@
 .project-desc {
   margin: 0;
   color: var(--text-secondary);
+  text-align: center;
 }
 
 .project-icon {
@@ -138,13 +145,18 @@
   height: 56px;
   object-fit: contain;
   flex-shrink: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .project-actions {
   display: flex;
   gap: 0.6rem;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .project-link {
@@ -443,6 +455,28 @@
   justify-content: center;
   z-index: 2000;
   padding: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .projects-lightbox {
+    background: rgba(15, 15, 15, 0.95);
+  }
+
+  .projects-lightbox-inner {
+    background: var(--bg-secondary);
+  }
+
+  .projects-lightbox-inner img {
+    background: var(--bg-tertiary);
+  }
+
+  .projects-lightbox-close {
+    color: var(--text-primary);
+  }
+
+  .projects-lightbox-close:hover {
+    color: var(--accent-primary);
+  }
 }
 
 .projects-lightbox-inner {
