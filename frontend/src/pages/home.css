@@ -87,6 +87,17 @@
   color: var(--text-secondary);
   max-width: 62ch;
   line-height: 1.65;
+  font-size: 1rem;
+}
+
+.hero-presentation-text {
+  margin: 1rem 0 0 0;
+  color: var(--text-secondary);
+  max-width: 62ch;
+  line-height: 1.7;
+  font-size: 0.95rem;
+  font-weight: 400;
+  font-style: italic;
 }
 
 /* Pills */
