@@ -186,6 +186,12 @@
   font-size: 0.95rem;
 }
 
+@media (prefers-color-scheme: dark) {
+  .contact-detail {
+    color: #a0a0a0;
+  }
+}
+
 .contact-note {
   border: 1px solid rgba(52, 152, 219, 0.15);
   background: rgba(52, 152, 219, 0.04);

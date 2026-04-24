@@ -61,15 +61,22 @@ export default function Header({ forceHidden = false }: HeaderProps) {
   useEffect(() => {
     if (!menuOpen) return;
 
-    const handlePointerDown = (event: PointerEvent) => {
+    const handleClickOutside = (event: Event) => {
       const target = event.target as Node;
       if (drawerRef.current?.contains(target)) return;
       if (menuButtonRef.current?.contains(target)) return;
       setMenuOpen(false);
     };
 
-    document.addEventListener("pointerdown", handlePointerDown);
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
+    // Délai pour éviter que le listener se déclenche sur le même click
+    const timer = setTimeout(() => {
+      document.addEventListener("click", handleClickOutside);
+    }, 0);
+
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, [menuOpen]);
 
   useEffect(() => {
@@ -122,7 +129,11 @@ export default function Header({ forceHidden = false }: HeaderProps) {
             type="button"
             aria-label={menuOpen ? t("header.menuClose") : t("header.menuOpen")}
             aria-expanded={menuOpen}
-            onClick={toggleMenu}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleMenu();
+            }}
             ref={menuButtonRef}
           >
             <span className="bar" aria-hidden="true" />
