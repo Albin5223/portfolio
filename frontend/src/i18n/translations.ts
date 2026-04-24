@@ -74,7 +74,7 @@ export const translations = {
       kicker: "Contact",
       title: "Restons en contact",
       lede:
-        "Une opportunité, un projet ou simplement l'envie d'échanger ? Je suis disponible pour discuter de vos besoins et réfléchir ensemble à la meilleure façon d'y répondre.",
+        "Une opportunité, un projet ou simplement l'envie d'échanger ? Je suis disponible pour discuter de vos besoins",
       downloadCv: "Télécharger mon CV",
       emailCta: "Écrire un email",
       loading: "Chargement des contacts...",
@@ -162,7 +162,7 @@ export const translations = {
       kicker: "Contact",
       title: "Stay in touch",
       lede:
-        "Got an opportunity or just want to chat? I'm available to discuss your needs and figure out the best way to help.",
+        "Got an opportunity or just want to chat? I'm available to discuss your needs",
       downloadCv: "Download my resume",
       emailCta: "Send an email",
       loading: "Loading contacts...",

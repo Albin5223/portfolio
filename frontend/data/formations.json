@@ -106,5 +106,23 @@
         "description": "Upcoming certification"
       }
     }
+  },
+  {
+    "id": 7,
+    "typeFormation": "Informatique",
+    "dateStart": "2026-03-30",
+    "dateEnd": "2026-04-03",
+    "translations": {
+      "fr": {
+        "title": "Formation Docker et Kubernetes",
+        "etablissement": "Université Banque de France",
+        "description": "Formation autour de Docker et Kubernetes"
+      },
+      "en": {
+        "title": "Docker and Kubernetes Training",
+        "etablissement": "Banque de France University",
+        "description": "Training on Docker and Kubernetes"
+      }
+    }
   }
 ]

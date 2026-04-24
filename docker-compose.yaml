@@ -1,9 +1,11 @@
 services: # Chaque service correspond à un conteneur
   frontend:
-    build: ./frontend # Construit l’image du frontend à partir du Dockerfile dans le dossier frontend
+    build:
+      context: ./frontend # Construit l’image du frontend à partir du Dockerfile dans le dossier frontend
+      dockerfile: Dockerfile.dev # Utilise un Dockerfile spécifique pour le développement
     ports:
       - "5173:5173" # Frontend via http://localhost:5173.  
     volumes:
     - ./frontend:/app  # monte le code local dans le conteneur
     - /app/node_modules # ignore les node_modules du conteneur pour ne pas écraser
-    command: npm run dev -- --host 0.0.0.0
+    command: npm run dev -- --host 0.0.0.0  

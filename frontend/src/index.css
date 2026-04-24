@@ -1,11 +1,47 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* Color Palette */
+  --color-primary: #3498db;
+  --color-primary-dark: #2980b9;
+  --color-primary-light: #5dade2;
+  --color-secondary: #2ecc71;
+  --color-secondary-hover: #27ae60;
+  --color-accent: #e74c3c;
+  --color-warning: #f39c12;
+  
+  /* Text Colors */
+  --text-primary: #1a1a1a;
+  --text-secondary: #555555;
+  --text-tertiary: #888888;
+  --text-light: #ffffff;
+  
+  /* Background Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #f1f3f5;
+  --bg-overlay: rgba(255, 255, 255, 0.95);
+  
+  /* Border & Shadow */
+  --border-color: #e0e0e0;
+  --border-light: #f0f0f0;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 32px rgba(0, 0, 0, 0.12);
+  
+  /* Alias variables for compatibility */
+  --accent-primary: var(--color-primary);
+  --accent-secondary: var(--color-secondary);
+  --accent-secondary-hover: var(--color-secondary-hover);
+  --accent-warning: var(--color-warning);
+  --card-border: var(--border-light);
+  --card-sheen: rgba(0, 0, 0, 0.02);
+  
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: light;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -21,12 +57,44 @@ au-delà de sa valeur prévue*/
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  font-weight: 600;
+  color: var(--accent-secondary);
+  text-decoration: none;
+  transition: color 200ms ease;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--accent-secondary-hover);
+  text-decoration: underline;
+}
+
+/* Override pour les boutons */
+a.hero-btn,
+a.contact-btn {
+  color: inherit !important;
+}
+
+a.hero-btn.primary {
+  color: white !important;
+}
+
+a.contact-btn.primary {
+  color: #000000 !important;
+}
+
+a.hero-btn.primary:visited {
+  color: white !important;
+}
+
+a.contact-btn.primary:visited {
+  color: #000000 !important;
+}
+
+a.hero-btn.primary:hover {
+  color: white !important;
+}
+
+a.contact-btn.primary:hover {
+  color: #000000 !important;
 }
 
 body {
@@ -38,7 +106,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden; /* prevent unwanted horizontal sliding */
-  background: var(--home-gradient, #0f172a);
+  background: var(--home-gradient, var(--bg-primary));
 }
 
 h1 {
@@ -47,33 +115,52 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  padding: 0.8em 1.6em;
   font-size: 1em;
-  font-weight: 500;
+  font-weight: 600;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--accent-secondary);
+  color: var(--text-light);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-md);
 }
 button:hover {
-  border-color: #646cff;
+  background-color: var(--accent-secondary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+button:active {
+  transform: translateY(0);
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 2px solid var(--accent-secondary);
+  outline-offset: 2px;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
   }
   a:hover {
-    color: #747bff;
+    color: var(--accent-secondary-hover);
   }
-  button {
-    background-color: #f9f9f9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-primary: #f5f5f5;
+    --text-secondary: #b0b0b0;
+    --text-tertiary: #808080;
+    --bg-primary: #0f0f0f;
+    --bg-secondary: #1a1a1a;
+    --bg-tertiary: #252525;
+    --bg-overlay: rgba(15, 15, 15, 0.95);
+    --border-color: #333333;
+    --border-light: #222222;
   }
 }

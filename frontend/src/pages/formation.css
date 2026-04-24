@@ -3,10 +3,10 @@
   display: flex;
   justify-content: center;
   padding: clamp(2.5rem, 5vw, 4.5rem) 1.5rem clamp(4rem, 6vw, 7rem);
-  background: radial-gradient(circle at 20% 20%, rgba(94, 210, 255, 0.08), transparent 32%),
-    radial-gradient(circle at 80% 0%, rgba(124, 139, 255, 0.08), transparent 36%),
-    linear-gradient(180deg, #0b0f1f 0%, #0b1228 100%);
-  color: #e8edff;
+  background: radial-gradient(circle at 20% 20%, rgba(52, 152, 219, 0.05), transparent 32%),
+    radial-gradient(circle at 80% 0%, rgba(44, 62, 80, 0.04), transparent 36%),
+    linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  color: var(--text-primary);
 }
 
 .formation-inner {
@@ -27,17 +27,18 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: 0.95rem;
-  color: #9fb4ff;
+  color: var(--accent-secondary);
 }
 
 .formation-title {
   margin: 0;
   font-size: clamp(2rem, 2vw + 1rem, 2.4rem);
+  color: var(--text-primary);
 }
 
 .formation-lede {
   margin: 0;
-  color: rgba(232, 237, 255, 0.85);
+  color: var(--text-secondary);
   max-width: 68ch;
 }
 
@@ -45,11 +46,11 @@
 .formation-error,
 .formation-empty {
   margin: 0;
-  color: rgba(232, 237, 255, 0.8);
+  color: var(--text-secondary);
 }
 
 .formation-error {
-  color: #ff9b9b;
+  color: var(--accent-warning);
 }
 
 .formation-timeline {
@@ -67,7 +68,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(180deg, rgba(124, 139, 255, 0.45), rgba(94, 210, 255, 0.4));
+  background: linear-gradient(180deg, rgba(52, 152, 219, 0.45), rgba(52, 152, 219, 0.4));
   transform: translateX(-50%);
   opacity: 0.5;
 }
@@ -83,19 +84,19 @@
 
 .formation-card {
   position: relative;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.06), rgba(52, 152, 219, 0.02));
+  border: 2px solid var(--border-light);
   border-radius: 16px;
-  padding: 1.1rem 1.25rem 1.2rem 1.1rem;
-  color: #e8edff;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  padding: 1.3rem 1.5rem;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
   overflow: hidden;
   transform: translateY(28px);
   opacity: 0;
-  transition: transform 200ms ease, box-shadow 180ms ease, border-color 180ms ease, opacity 220ms ease;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .formation-card::after {
@@ -103,7 +104,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  border: 1px solid rgba(94, 210, 255, 0.12);
+  border: 2px solid var(--accent-primary);
   pointer-events: none;
   opacity: 0;
   transition: opacity 180ms ease;
@@ -111,8 +112,8 @@
 
 .formation-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.34);
-  border-color: rgba(124, 139, 255, 0.25);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-primary);
 }
 
 .formation-card.is-visible {
@@ -121,7 +122,7 @@
 }
 
 .formation-card:hover::after {
-  opacity: 1;
+  opacity: 0;
 }
 
 .formation-card-top {
@@ -136,10 +137,11 @@
   display: grid;
   place-items: center;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(124, 139, 255, 0.28), rgba(94, 210, 255, 0.32));
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #0b1021;
-  box-shadow: 0 10px 26px rgba(94, 210, 255, 0.28);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border: 2px solid rgba(52, 152, 219, 0.2);
+  color: var(--text-light);
+  box-shadow: var(--shadow-md);
+  font-weight: 700;
 }
 
 .formation-meta {
@@ -160,12 +162,12 @@
   font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: #e8edff;
+  color: var(--text-primary);
 }
 
 .formation-dates {
   margin: 0;
-  color: rgba(232, 237, 255, 0.7);
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
@@ -177,7 +179,7 @@
 
 .formation-card-desc {
   margin: 0;
-  color: rgba(232, 237, 255, 0.84);
+  color: var(--text-secondary);
   line-height: 1.55;
   text-align: left;
 }

@@ -8,11 +8,21 @@ export default function Home() {
     <main className="home">
       <section className="hero">
         <div className="hero-text">
-          <p className="hero-eyebrow">{t("home.eyebrow")}</p>
-          <h1 className="hero-title">{t("home.title")}</h1>
-          <p className="hero-lede">{t("home.lede")}</p>
+          <div className="hero-eyebrow">
+            <span className="hero-eyebrow-dot" />
+            {t("home.eyebrow")}
+          </div>
+
+          <div className="hero-divider" />
+
+          <h1 className="hero-title">
+            {t("home.title")}
+            <br />
+          </h1>
+
+          
           <p className="hero-body">{t("home.description")}</p>
-          <p className="hero-body">{t("home.approche")}</p>
+
 
           <div className="hero-actions">
             <a className="hero-btn primary" href="#projects">

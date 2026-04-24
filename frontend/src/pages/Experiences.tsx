@@ -1,13 +1,8 @@
-
-import { useEffect, useState } from "react";
-import type { Swiper as SwiperInstance } from "swiper";
+import { useEffect, useRef, useState } from "react";
 import "./experiences.css";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
 import { getExperiences } from "../services/api";
 import { useI18n } from "../i18n";
+import WorkIcon from "@mui/icons-material/Work";
 
 export type Experience = {
   id: number;
@@ -20,17 +15,21 @@ export type Experience = {
 
 export default function Experiences() {
   const [items, setItems] = useState<Experience[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [swiperRef, setSwiperRef] = useState<SwiperInstance | null>(null);
+  const [visibleMap, setVisibleMap] = useState<Record<number, boolean>>({});
+  const cardRefs = useRef<Record<number, HTMLElement | null>>({});
   const { t, lang } = useI18n();
 
+  // Fetch data
   useEffect(() => {
-    const fetchData = async () => {
+    let mounted = true;
+    (async () => {
+      setLoading(true);
+      setError(null);
       try {
-        setLoading(true);
-        setError(null);
         const data = await getExperiences(lang);
+        if (!mounted) return;
         if (!Array.isArray(data) || data.length === 0) {
           setItems([]);
           return;
@@ -49,89 +48,91 @@ export default function Experiences() {
               : [],
           }))
           .sort((a, b) => {
-            const aDate = a.endDate ? new Date(a.endDate).getTime() : 0;
-            const bDate = b.endDate ? new Date(b.endDate).getTime() : 0;
+            const aDate = a.endDate ? new Date(a.endDate).getTime() : Infinity;
+            const bDate = b.endDate ? new Date(b.endDate).getTime() : Infinity;
             return bDate - aDate;
           });
         setItems(normalized);
       } catch (e) {
         console.error(e);
+        if (!mounted) return;
         setError(t("experiences.error"));
       } finally {
-        setLoading(false);
+        if (mounted) setLoading(false);
       }
-    };
+    })();
 
-    fetchData();
+    return () => {
+      mounted = false;
+    };
   }, [lang]);
 
-  const experiences = items.length > 0 ? items : [];
+  // IntersectionObserver — même logique que Formation
+  useEffect(() => {
+    if (!items.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const targetId = Number((entry.target as HTMLElement).dataset.id);
+          if (entry.isIntersecting && targetId) {
+            setVisibleMap((prev) =>
+              prev[targetId] ? prev : { ...prev, [targetId]: true }
+            );
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.28 }
+    );
 
-  const handlePrev = () => swiperRef?.slidePrev();
-  const handleNext = () => swiperRef?.slideNext();
+    Object.entries(cardRefs.current).forEach(([id, el]) => {
+      if (el) {
+        el.dataset.id = id;
+        observer.observe(el);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [items]);
 
   return (
-    <section id="experiences" className="experiences">
-      <div className="experiences-inner">
-        <header className="experiences-header">
-          <p className="experiences-kicker">{t("experiences.kicker")}</p>
-          <h2 className="experiences-title">{t("experiences.title")}</h2>
-          <h4 className="experiences-lede">{t("experiences.lede")}</h4>
+    <section id="experiences" className="formation">
+      <div className="formation-inner">
+        <header className="formation-header">
+          <p className="formation-kicker">{t("experiences.kicker")}</p>
+          <h2 className="formation-title">{t("experiences.title")}</h2>
         </header>
 
-        {loading && <p className="experiences-status">{t("experiences.loading")}</p>}
-
-        {error && !loading && (
-          <p className="experiences-error" role="alert">{error}</p>
+        {loading && (
+          <p className="formation-status">{t("experiences.loading")}</p>
         )}
 
-        {!loading && !error && experiences.length === 0 && (
-          <p className="experiences-empty">{t("experiences.empty")}</p>
+        {error && (
+          <div className="formation-error" role="alert">
+            {error}
+          </div>
         )}
 
-        {!loading && !error && experiences.length > 0 && (
-          <div className="experiences-viewport">
-            <div className="experiences-progress swiper-pagination" />
-            <Swiper
-              modules={[Pagination]}
-              centeredSlides
-              spaceBetween={18}
-              slidesPerView={1.1}
-              grabCursor
-              onSwiper={setSwiperRef}
-              pagination={{ type: "progressbar", el: ".experiences-progress", clickable: false }}
-              className="experiences-swiper"
-            >
-              {experiences.map((exp, idx) => (
-                <SwiperSlide key={exp.id ?? idx} className="experience-slide">
-                  <article className="experience-card">
-                    <div className="experience-top">
-                      <div className="experience-badge">{renderPeriod(exp.startDate, exp.endDate, t("experiences.periodFallback"), lang)}</div>
-                      <h4 className="experience-title">{exp.intitule}</h4>
-                      {exp.entreprise && <p className="experience-company">{exp.entreprise}</p>}
-                    </div>
-                    {exp.missions.length > 0 && (
-                      <div className="experience-missions">
-                        <p className="experience-label">{t("experiences.missionsLabel")}</p>
-                        <ul className="experience-list">
-                          {exp.missions.map((mission, missionIdx) => (
-                            <li key={missionIdx}>{mission}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </article>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-            <div className="experiences-arrows">
-              <button type="button" className="experience-cta" onClick={handlePrev} disabled={!swiperRef}>
-                {t("experiences.previous")}
-              </button>
-              <button type="button" className="experience-cta" onClick={handleNext} disabled={!swiperRef}>
-                {t("experiences.next")}
-              </button>
-            </div>
+        {!loading && !error && items.length === 0 && (
+          <p className="formation-empty">{t("experiences.empty")}</p>
+        )}
+
+        {!loading && !error && items.length > 0 && (
+          <div className="formation-timeline">
+            {items.map((item, index) => (
+              <ExperienceCard
+                key={item.id}
+                experience={item}
+                index={index}
+                isVisible={Boolean(visibleMap[item.id])}
+                lang={lang}
+                setRef={(el) => {
+                  cardRefs.current[item.id] = el;
+                }}
+              />
+            ))}
           </div>
         )}
       </div>
@@ -139,15 +140,70 @@ export default function Experiences() {
   );
 }
 
+function ExperienceCard({
+  experience,
+  index,
+  isVisible,
+  lang,
+  setRef,
+}: {
+  experience: Experience;
+  index: number;
+  isVisible: boolean;
+  lang: string;
+  setRef: (el: HTMLElement | null) => void;
+}) {
+  return (
+    <article
+      ref={setRef}
+      className={`formation-card timeline-card ${
+        index % 2 === 0 ? "is-left" : "is-right"
+      } ${isVisible ? "is-visible" : ""}`}
+    >
+      <div className="formation-card-top">
+        <div className="formation-icon-wrap">
+          <WorkIcon fontSize="small" />
+        </div>
+        <div className="formation-meta">
+          <p className="formation-card-title">{experience.intitule}</p>
+          <p className="formation-dates">
+            {renderPeriod(experience.startDate, experience.endDate, "", lang)}
+          </p>
+        </div>
+      </div>
+      <h3 className="formation-card-etablissement">{experience.entreprise}</h3>
+      {experience.missions.length > 0 && (
+        <ul className="missions-list">
+          {experience.missions.map((m, i) => (
+            <li key={i} className="formation-card-desc">
+              {m}
+            </li>
+          ))}
+        </ul>
+      )}
+    </article>
+  );
+}
+
 function formatDate(d: string | Date | null, locale: string) {
   if (!d) return "";
   const dateObj = typeof d === "string" ? new Date(d) : d;
   if (Number.isNaN(dateObj.getTime())) return "";
-  return new Intl.DateTimeFormat(locale === "en" ? "en-US" : "fr-FR", { month: "short", year: "numeric" }).format(dateObj);
+  return new Intl.DateTimeFormat(locale === "en" ? "en-US" : "fr-FR", {
+    month: "long",
+    year: "numeric",
+  }).format(dateObj);
 }
 
-function renderPeriod(start: string | Date | null, end: string | Date | null, fallback: string, locale: string) {
+function renderPeriod(
+  start: string | Date | null,
+  end: string | Date | null,
+  fallback: string,
+  locale: string
+) {
   const startText = formatDate(start, locale);
   const endText = formatDate(end, locale);
-  return startText && endText ? `${startText} — ${endText}` : startText || endText || fallback;
+  return startText && endText
+    ? `${startText} — ${endText}`
+    : startText || endText || fallback;
 }

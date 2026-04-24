@@ -384,7 +384,6 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                   </button>
                 </>
               )}
-              <button type="button" className="projects-lightbox-close" onClick={closeLightbox} aria-label={t("projects.modal.close")}>×</button>
             </div>
           </div>
         )}
