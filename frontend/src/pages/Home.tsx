@@ -22,7 +22,7 @@ export default function Home() {
 
           
           <p className="hero-body">{t("home.description")}</p>
-
+          <p className="hero-presentation-text">{t("home.presentation")}</p>
 
           <div className="hero-actions">
             <a className="hero-btn primary" href="#projects">
