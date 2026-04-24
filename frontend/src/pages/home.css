@@ -6,6 +6,16 @@
   --card-sheen: rgba(0, 0, 0, 0.04);
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --home-gradient: radial-gradient(circle at 20% 20%, rgba(52, 152, 219, 0.06), transparent 30%),
+      radial-gradient(circle at 80% 0%, rgba(52, 152, 219, 0.04), transparent 28%),
+      linear-gradient(135deg, #1a1a1a, #0f0f0f 55%, #151515);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-sheen: rgba(255, 255, 255, 0.02);
+  }
+}
+
 .home {
   width: 100%;
   display: flex;
